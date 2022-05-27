@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scf.dto.IMDeactivateReq;
+import com.scf.dto.IMDetailsResponseDto;
+import com.scf.dto.ResponseDto;
 import com.scf.model.IM;
-import com.scf.model.UserEntity;
-import com.scf.serviceImpl.IMService;
+import com.scf.service.IMService;
+import com.scf.serviceImpl.IMServiceImpl;
 import com.scf.serviceImpl.UserEntityService;
 
 /**
@@ -25,6 +28,7 @@ import com.scf.serviceImpl.UserEntityService;
  */
 @RestController
 @RequestMapping("scfu/api")
+
 public class IMController 
 {
 
@@ -38,20 +42,16 @@ UserEntityService userEntityService;
  * This api retrieves all the im detail from the database 
  * @return success or failure response
  */
-@GetMapping("/im")
-private ResponseEntity<List<IM>> getAllIM() 
+@GetMapping("/im/getImDetails")
+private ResponseEntity<IMDetailsResponseDto > getAllIM() 
 {
-	try {
-	List<IM> im = imService.getAllIM();
+	
+	
+		IMDetailsResponseDto response = imService.getAllIM();
+        return new ResponseEntity<>(response,HttpStatus.OK);
+	
 
-	if (im.isEmpty()) {
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	return new ResponseEntity<>(imService.getAllIM(), HttpStatus.OK);
-   } catch (Exception e) {
-	return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-}
+	
 }
 
 
@@ -61,9 +61,9 @@ private ResponseEntity<List<IM>> getAllIM()
  * @return success or failure response
  */
 @GetMapping("/im/{imid}")
-private ResponseEntity<IM> getIM(@PathVariable("imid") int imId) 
+private ResponseEntity<IM> getIM(@PathVariable("imid") String imCode) 
 {
-	Optional<IM> imData = imService.getIMByCode(imId);
+	Optional<IM> imData = imService.getIMByCode(imCode);
 	if (imData.isPresent()) {
 		return new ResponseEntity<>(imData.get(), HttpStatus.OK);
 	} else {
@@ -79,14 +79,12 @@ private ResponseEntity<IM> getIM(@PathVariable("imid") int imId)
  * @return success or failure response
  */
 @DeleteMapping("/im/{imid}")
-private ResponseEntity<HttpStatus> deleteIM(@PathVariable("imid") int imId) 
+private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
 {
-	try {
-		imService.delete(imId);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	} catch (Exception e) {
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+	
+		ResponseDto response =imService.delete(imCode);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	
 }
 
 
@@ -94,10 +92,10 @@ private ResponseEntity<HttpStatus> deleteIM(@PathVariable("imid") int imId)
  * This api creates all the im detail in the database
  * @return imCode
  */
-@PostMapping("/im")
+@PostMapping("/im/addIm")
 private String saveIM(@RequestBody IM im) 
 {
-	imService.saveOrUpdate(im);
+	imService.addIm(im);
 return im.getImCode();
 }
 
@@ -106,11 +104,12 @@ return im.getImCode();
  * @param im
  * @return im
  */
-@PutMapping("/im")
-private IM update(@RequestBody IM im) 
+@PutMapping("/im/updateIm")
+private ResponseEntity<ResponseDto> update(@RequestBody IM im) 
 {
-	imService.saveOrUpdate(im);
-return im;
+	
+	ResponseDto responseDto=imService.updateIm(im);
+	return new ResponseEntity<>(responseDto,HttpStatus.OK);
 }
 
 
@@ -120,11 +119,12 @@ return im;
  * @return im
  */
 @PutMapping("/im/deactivate")
-private IM deActivate(@RequestBody IM im) 
+private ResponseEntity<ResponseDto> deActivate(@RequestBody IMDeactivateReq request) 
 {
-	im.setIsImInactive(false);
-	imService.saveOrUpdate(im);
-return im;
+	
+		ResponseDto responseDto=imService.isImInactive(request);
+		return new ResponseEntity<>(responseDto,HttpStatus.OK);
+	
 }
 
 
@@ -137,7 +137,7 @@ return im;
 private IM activate(@RequestBody IM im) 
 {
 	im.setIsImInactive(true);
-	imService.saveOrUpdate(im);
+//	imService.saveOrUpdate(im);
 return im;
 }
 }

@@ -22,12 +22,13 @@ import lombok.Data;
 public class IM
 {
 
-	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	// @Id
-	@SequenceGenerator(name = "IMSeqGenerator", sequenceName = "mySeq", initialValue = 100, allocationSize = 1000)
-	  @GeneratedValue(generator = "IMSeqGenerator")
-	private Long imId;
+    
+	@Column
+  	@Id
+  	@SequenceGenerator(name = "IMSeqGenerator", sequenceName = "mySeq", initialValue = 100, allocationSize = 1000)
+  	@GeneratedValue(generator = "IMSeqGenerator")
+  	private Long imId;
+	
 	
 	@Column
 	private String imCode;
@@ -177,6 +178,8 @@ public class IM
 	private Date imMappingTime;
 	@Column
 	private String imMappingBy;
+	
+	
 
 
 }
