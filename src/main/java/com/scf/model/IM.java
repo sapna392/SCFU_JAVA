@@ -1,11 +1,10 @@
 package com.scf.model;
 import java.util.Date;
 
-import javax.annotation.Generated;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -140,9 +139,6 @@ public class IM
 	@Column
 	private String action;
 	@Column
-	private Number historyId;
-
-	@Column
 	private String loanAccNosharedBy;
 	@Column
 	private String businessGroup;
@@ -177,6 +173,21 @@ public class IM
 	private Date imMappingTime;
 	@Column
 	private String imMappingBy;
+	@Column
+	private Number imLimit;
+	@Column
+	private Date imLimitExpireDate;
+	@Column
+	private Number imPostageCharges;
+	@Column
+	private Number imCommissionCharges;
+	@Column
+	private Number imTaxCharges;
+	@Column
+	private Date imDueDate;
+	@Column
+	private Date imInterestRecoverOn;
+	@Column
+	private String imVendorAutoOnboarding;
 
-
-}
+	}
