@@ -20,7 +20,7 @@ public class UserEntity {
 	@Column
 	private String typeOfEntity;
 	@Column
-	private int stratValue;
+	private Long stratValue;
 	@Column
 	private String prefix;
 	

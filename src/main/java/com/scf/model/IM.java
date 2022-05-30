@@ -24,9 +24,8 @@ public class IM
 
     
 	@Column
-  	@Id
-  	@SequenceGenerator(name = "IMSeqGenerator", sequenceName = "mySeq", initialValue = 100, allocationSize = 1000)
-  	@GeneratedValue(generator = "IMSeqGenerator")
+	  @Id
+//	 @GeneratedValue(strategy = GenerationType.IDENTITY)
   	private Long imId;
 	
 	
@@ -178,8 +177,58 @@ public class IM
 	private Date imMappingTime;
 	@Column
 	private String imMappingBy;
+	@Column
+	private Number imLimit;
+	@Column
+	private Date imLimitExpireDate;
+	@Column
+	private Number imPostageCharges;
+	@Column
+	private Number imCommissionCharges;
+	@Column
+	private Number imTaxCharges;
+	@Column
+	private Date imDueDate;
+	@Column
+	private Date imInterestRecoverOn;
+	@Column
+	private String imVendorAutoOnboarding;
+	@Column
+	private String sharedBy;
+	@Column
+	private String overrideCreditPeriodParameters;
+	@Column
+	private String creditPeriod;
+	@Column
+	private Number creditPeriodDefault;
+	@Column
+	private Number creditPeriodMin;
+	@Column
+	private Number creditPeriodMax;
+	@Column
+	private String overrideRateofInt;
+	@Column
+	private Number rateOfInt;
+	@Column
+	private Number effectiveIntRate;
+	@Column
+	private String selectParameterToOverride;
+	@Column
+	private String addorDeduct;
+	@Column
+	private Number defaults;
+	@Column
+	private Number min;
+	@Column
+	private Number max;
+	@Column
+	private Number penalROI;
+	@Column
+	private String backDatedInvoicing;
+	@Column
+	private Number mumberOfDaysFrom;
+	@Column
+	private Number mumberOfDaysTo;
 	
-	
-
 
 }

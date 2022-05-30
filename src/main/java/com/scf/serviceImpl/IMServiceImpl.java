@@ -10,7 +10,9 @@ import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
 import com.scf.model.IM;
+import com.scf.model.IMHistory;
 import com.scf.model.UserEntity;
+import com.scf.repository.IMHistoryRepository;
 import com.scf.repository.IMRepository;
 import com.scf.service.IMService;
 
@@ -27,6 +29,9 @@ public class IMServiceImpl implements IMService
 {
 	@Autowired
 	IMRepository imRepository;
+	
+	@Autowired
+	IMHistoryRepository imHistoryRepository;
 
 	@Autowired
 	UserEntityService userEntityService;
@@ -48,7 +53,7 @@ public class IMServiceImpl implements IMService
 			response.setListOfIM(im);
 		}
 		else {
-			response.setStatusCode("200");
+			response.setStatusCode("404");
 			response.setStatus("Failure");
 			response.setMsg("Data not available !");
 		}
@@ -66,9 +71,28 @@ public class IMServiceImpl implements IMService
 	 * @param id
 	 * @return im
 	 */
-	public Optional<IM> getIMByCode(String imCode) 
+	public IMDetailsResponseDto getIMByCode(String imCode) 
 	{
-		return imRepository.findById(imCode);
+		IMDetailsResponseDto response = new IMDetailsResponseDto();
+		try {
+			List<IM> im =imRepository.findByImCode(imCode);
+		if(!im.isEmpty()) {
+			response.setStatusCode("200");
+			response.setStatus("Success");
+			response.setMsg("IM retreived successfully !");
+			response.setListOfIM(im);
+		}
+		else {
+			response.setStatusCode("404");
+			response.setStatus("Failure");
+			response.setMsg("Data not available !");
+		}
+		}
+		catch(Exception e) {
+         log.error("Exception Occurred" +e.getMessage() );
+         response.setMsg(e.getMessage());
+		}
+		return response;
 	}
 
 
@@ -76,26 +100,41 @@ public class IMServiceImpl implements IMService
 	 * Saving a specific record by using the method save()
 	 * @param im
 	 */
-	public void addIm(IM im) 
+	public ResponseDto addIm(IM im) 
 	{
+  
+		ResponseDto responseDto= new ResponseDto();
 		Optional<UserEntity> userEntityData =userEntityService.getEntityType("IM");
 		String prefix=userEntityData.get().getPrefix();
 		try {
+		log.info("add IM started ");
 		Long maxId=imRepository.getTopId();
 		System.out.println("maxId:" +maxId);
 		if(maxId==null){
-		int stratValue=userEntityData.get().getStratValue();
+		Long stratValue=userEntityData.get().getStratValue();
+		im.setImId(stratValue);
 		im.setImCode(prefix+stratValue);	
 		}else {
-			
+			im.setImId(maxId+1);
 			im.setImCode(prefix+(maxId+1));
 		}
+		
+		
+		
+		 imRepository.save(im);
+		 
+		 IMHistory iHis = new IMHistory(im);
+		 imHistoryRepository.save(iHis);
+		 
+		responseDto.setStatus("Success");
+		responseDto.setStatusCode("200");
+		responseDto.setMsg("IM Add successfully");
 		}
 		catch(Exception e) {
-			System.out.println(e);
+             log.error("Exception Occurred" +e.getMessage() );
+			  responseDto.setMsg(e.getMessage());	
 		}
-		
-	    imRepository.save(im);
+		return responseDto;
 	}
 
 
@@ -106,7 +145,7 @@ public class IMServiceImpl implements IMService
 	public ResponseDto delete(String imCode) {
 		ResponseDto responseDto= new ResponseDto();
 		try {
-		log.info("delet IM started for given imcode "+imCode);
+		log.info("delete IM started for given imcode "+imCode);
 		imRepository.deleteIMById(imCode);
 		responseDto.setStatus("Success");
 		responseDto.setStatusCode("200");
@@ -146,11 +185,28 @@ public class IMServiceImpl implements IMService
 
 
 	@Override
-	public ResponseDto updateIm(IM imUpdateRequest) {
-		ResponseDto responseDto= new ResponseDto();
-		String imCode =imUpdateRequest.getImCode();
+	public ResponseDto updateIm(IM im) {
 		
+		
+		ResponseDto responseDto= new ResponseDto();
+		
+		try{
+			List<IM> im2 = imRepository.findByImCode(im.getImCode());
+			im.setImId(im2.get(0).getImId());
+			imRepository.save(im);
+			log.info("IM updated successfully");
+			responseDto.setStatus("Success");
+			responseDto.setStatusCode("200");
+			responseDto.setMsg("IM updated successfully");
+			
+		}
+		catch(Exception e) {
+			log.error("Exception Occurred" +e.getMessage() );
+			
+			responseDto.setMsg(e.getMessage());
+			}
 		return responseDto;
+		
 	}
 
 

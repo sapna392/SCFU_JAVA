@@ -1,10 +1,8 @@
 package com.scf.controller;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +16,9 @@ import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
 import com.scf.model.IM;
+import com.scf.repository.IMHistoryRepository;
+import com.scf.repository.IMRepository;
 import com.scf.service.IMService;
-import com.scf.serviceImpl.IMServiceImpl;
 import com.scf.serviceImpl.UserEntityService;
 
 /**
@@ -28,7 +27,7 @@ import com.scf.serviceImpl.UserEntityService;
  */
 @RestController
 @RequestMapping("scfu/api")
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class IMController 
 {
 
@@ -37,6 +36,10 @@ IMService imService;
 
 @Autowired
 UserEntityService userEntityService;
+
+@Autowired
+IMRepository repo;
+
 
 /**
  * This api retrieves all the im detail from the database 
@@ -60,15 +63,11 @@ private ResponseEntity<IMDetailsResponseDto > getAllIM()
  * @param imId
  * @return success or failure response
  */
-@GetMapping("/im/{imid}")
-private ResponseEntity<IM> getIM(@PathVariable("imid") String imCode) 
+@GetMapping("/im/getim/{imid}")
+private ResponseEntity<IMDetailsResponseDto > getIM(@PathVariable("imid") String imCode) 
 {
-	Optional<IM> imData = imService.getIMByCode(imCode);
-	if (imData.isPresent()) {
-		return new ResponseEntity<>(imData.get(), HttpStatus.OK);
-	} else {
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+	IMDetailsResponseDto response= imService.getIMByCode(imCode);
+		 return new ResponseEntity<>(response,HttpStatus.OK);
 
 }
 
@@ -78,7 +77,7 @@ private ResponseEntity<IM> getIM(@PathVariable("imid") String imCode)
  * @param imId
  * @return success or failure response
  */
-@DeleteMapping("/im/{imid}")
+@DeleteMapping("/im/deleteim/{imid}")
 private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
 {
 	
@@ -93,10 +92,10 @@ private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode
  * @return imCode
  */
 @PostMapping("/im/addIm")
-private String saveIM(@RequestBody IM im) 
+private ResponseEntity<ResponseDto> saveIM(@RequestBody IM im) 
 {
-	imService.addIm(im);
-return im.getImCode();
+	ResponseDto response=imService.addIm(im);
+	return new ResponseEntity<>(response,HttpStatus.OK);
 }
 
 /**
@@ -107,9 +106,8 @@ return im.getImCode();
 @PutMapping("/im/updateIm")
 private ResponseEntity<ResponseDto> update(@RequestBody IM im) 
 {
-	
-	ResponseDto responseDto=imService.updateIm(im);
-	return new ResponseEntity<>(responseDto,HttpStatus.OK);
+	ResponseDto response=imService.updateIm(im);
+	return new ResponseEntity<>(response,HttpStatus.OK);
 }
 
 

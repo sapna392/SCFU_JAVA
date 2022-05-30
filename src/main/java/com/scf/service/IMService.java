@@ -12,14 +12,16 @@ public interface IMService {
 
 	IMDetailsResponseDto getAllIM();
 
-	Optional<IM> getIMByCode(String imCode);
+	IMDetailsResponseDto getIMByCode(String imCode);
 
 	ResponseDto delete(String imCode);
 
-	void addIm(IM im);
+	ResponseDto addIm(IM im);
 
 	ResponseDto isImInactive(IMDeactivateReq request);
 
 	ResponseDto updateIm(IM im);
+	
+	
 
 }
