@@ -100,10 +100,8 @@ public class IMServiceImpl implements IMService
 	 * Saving a specific record by using the method save()
 	 * @param im
 	 */
-	public ResponseDto addIm(IM im) 
-	{
-  
-		ResponseDto responseDto= new ResponseDto();
+	public ResponseDto addIm(IM im) {
+        ResponseDto responseDto= new ResponseDto();
 		Optional<UserEntity> userEntityData =userEntityService.getEntityType("IM");
 		String prefix=userEntityData.get().getPrefix();
 		try {
@@ -118,17 +116,14 @@ public class IMServiceImpl implements IMService
 			im.setImId(maxId+1);
 			im.setImCode(prefix+(maxId+1));
 		}
-		
-		
-		
-		 imRepository.save(im);
-		 
+		imRepository.save(im);
+		// Im details added to onb_im_master_history  
 		 IMHistory iHis = new IMHistory(im);
 		 imHistoryRepository.save(iHis);
 		 
 		responseDto.setStatus("Success");
 		responseDto.setStatusCode("200");
-		responseDto.setMsg("IM Add successfully");
+		responseDto.setMsg("IM Added successfully");
 		}
 		catch(Exception e) {
              log.error("Exception Occurred" +e.getMessage() );

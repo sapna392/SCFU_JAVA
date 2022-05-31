@@ -17,10 +17,14 @@ import lombok.Data;
 @Table (name = "ONB_VENDOR_MASTER")
 public class Vendor
 {
+	
+	@Column
+	  @Id
+//	 @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long vendorSeqCode;
 
-@Id
 @Column
-private int vendorCode;
+private String vendorCode;
 
 @Column
 private String name;

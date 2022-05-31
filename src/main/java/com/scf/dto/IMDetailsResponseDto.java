@@ -5,7 +5,10 @@ import java.util.List;
 import com.scf.model.IM;
 
 import lombok.Data;
-
+/**
+ * @author Sapna Singh
+ *
+ */
 @Data
 public class IMDetailsResponseDto {
 	private String status;

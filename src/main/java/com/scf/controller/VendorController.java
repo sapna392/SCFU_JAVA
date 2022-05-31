@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scf.dto.IMDetailsResponseDto;
+import com.scf.dto.ResponseDto;
+import com.scf.dto.VendorDeactivateRequest;
+import com.scf.dto.VendorDetailsResponseDto;
 import com.scf.model.Vendor;
-import com.scf.serviceImpl.VendorService;
+import com.scf.service.VendorService;
+import com.scf.serviceImpl.VendorServiceImpl;
 
 
 /**
- * @author Naseem
+ * @author Sapna Singh
  *
  */
 @RestController
@@ -35,20 +40,11 @@ VendorService vendorService;
  * This api retrieves all the vendor detail from the database 
  * @return success or failure response
  */
-@GetMapping("/vendor")
-private ResponseEntity<List<Vendor>> getAllVendor() 
-{
-	try {
-		List<Vendor> vendor = vendorService.getAllVendor();
-
-		if (vendor.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-
-		return new ResponseEntity<>(vendorService.getAllVendor(), HttpStatus.OK);
-	} catch (Exception e) {
-		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+@GetMapping("/vendor/getVendorDetails")
+private ResponseEntity<VendorDetailsResponseDto> getAllVendor() {
+	
+	VendorDetailsResponseDto response = vendorService.getAllVendor();
+	return new ResponseEntity<>(response,HttpStatus.OK);
 }
 
 
@@ -57,18 +53,14 @@ private ResponseEntity<List<Vendor>> getAllVendor()
  * @param vendorId
  * @return success or failure response
  */
-@GetMapping("/vendor/{vendorid}")
-private ResponseEntity<Vendor> getVendor(@PathVariable("vendorid") int vendorId) 
+/*@GetMapping("/vendor/{vendorid}")
+private ResponseEntity<VendorDetailsResponseDto> getVendor(@PathVariable("vendorid") String vendorCode) 
 {
-	Optional<Vendor> vendorData = vendorService.getVendorByCode(vendorId);
+	Optional<IMDetailsResponseDto> vendorData = vendorService.getVendorByCode(vendorCode);
 
-	if (vendorData.isPresent()) {
-		return new ResponseEntity<>(vendorData.get(), HttpStatus.OK);
-	} else {
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+	//return new ResponseEntity<>(vendorData,HttpStatus.OK);
 
-}
+}*/
 
 
 /**
@@ -89,14 +81,15 @@ private ResponseEntity<HttpStatus> deleteVendor(@PathVariable("vendorid") int ve
 
 
 /**
- * This api creates all the vendor detail in the database
+ * This api Add all the vendor detail in the database
  * @return vendorCode
  */
-@PostMapping("/vendor")
-private int saveVendor(@RequestBody Vendor vendor) 
+@PostMapping("/vendor/addVendor")
+private ResponseEntity<ResponseDto> saveVendor(@RequestBody Vendor vendor) 
 {
-	vendorService.saveOrUpdate(vendor);
-return vendor.getVendorCode();
+	ResponseDto response =  vendorService.addVendor(vendor);
+	return new ResponseEntity<>(response,HttpStatus.OK);
+
 }
 
 
@@ -105,10 +98,10 @@ return vendor.getVendorCode();
  * @param vendor
  * @return vendor
  */
-@PutMapping("/vendor")
+@PutMapping("/vendor/updateVendor")
 private Vendor update(@RequestBody Vendor vendor) 
 {
-	vendorService.saveOrUpdate(vendor);
+	vendorService.update(vendor);
 return vendor;
 }
  
@@ -119,11 +112,11 @@ return vendor;
  * @return vendor
  */
 @PutMapping("/vendor/deactivate")
-private Vendor deActivate(@RequestBody Vendor vendor) 
+private ResponseEntity<ResponseDto> deActivate(@RequestBody VendorDeactivateRequest requets) 
 {
-	vendor.setIsVendorInactive(false);
-	vendorService.saveOrUpdate(vendor);
-return vendor;
+	
+	ResponseDto responseDto=vendorService.deActivate(requets);
+	return new ResponseEntity<>(responseDto,HttpStatus.OK);
 }
 
 
@@ -132,11 +125,11 @@ return vendor;
  * @param vendor
  * @return vendor
  */
-@PutMapping("/vendor/activate")
+/*@PutMapping("/vendor/activate")
 private Vendor activate(@RequestBody Vendor vendor) 
 {
 	vendor.setIsVendorInactive(true);
 	vendorService.saveOrUpdate(vendor);
 return vendor;
-}
+}*/
 }

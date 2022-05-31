@@ -31,112 +31,107 @@ import com.scf.serviceImpl.UserEntityService;
 public class IMController 
 {
 
-@Autowired
-IMService imService;
+	@Autowired
+	IMService imService;
 
-@Autowired
-UserEntityService userEntityService;
+	@Autowired
+	UserEntityService userEntityService;
 
-@Autowired
-IMRepository repo;
-
-
-/**
- * This api retrieves all the im detail from the database 
- * @return success or failure response
- */
-@GetMapping("/im/getImDetails")
-private ResponseEntity<IMDetailsResponseDto > getAllIM() 
-{
-	
-	
-		IMDetailsResponseDto response = imService.getAllIM();
-        return new ResponseEntity<>(response,HttpStatus.OK);
-	
-
-	
-}
+	@Autowired
+	IMRepository repo;
 
 
-/**
- * This api retrieves the detail of a specific im based on 
- * @param imId
- * @return success or failure response
- */
-@GetMapping("/im/getim/{imid}")
-private ResponseEntity<IMDetailsResponseDto > getIM(@PathVariable("imid") String imCode) 
-{
-	IMDetailsResponseDto response= imService.getIMByCode(imCode);
-		 return new ResponseEntity<>(response,HttpStatus.OK);
+	/**
+	 * This api retrieves all the im detail from the database 
+	 * @return success or failure response
+	 */
+	@GetMapping("/im/getImDetails")
+	private ResponseEntity<IMDetailsResponseDto > getAllIM() {
 
-}
+        IMDetailsResponseDto response = imService.getAllIM();
+		return new ResponseEntity<>(response,HttpStatus.OK);
+ }
 
 
-/**
- * This api deletes the detail of a specific im based on 
- * @param imId
- * @return success or failure response
- */
-@DeleteMapping("/im/deleteim/{imid}")
-private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
-{
-	
+	/**
+	 * This api retrieves the detail of a specific im based on 
+	 * @param imId
+	 * @return success or failure response
+	 */
+	@GetMapping("/im/getim/{imid}")
+	private ResponseEntity<IMDetailsResponseDto > getIM(@PathVariable("imid") String imCode) 
+	{
+		IMDetailsResponseDto response= imService.getIMByCode(imCode);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+
+	}
+
+
+	/**
+	 * This api deletes the detail of a specific im based on 
+	 * @param imId
+	 * @return success or failure response
+	 */
+	@DeleteMapping("/im/deleteim/{imid}")
+	private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
+	{
+
 		ResponseDto response =imService.delete(imCode);
 		return new ResponseEntity<>(response,HttpStatus.OK);
-	
-}
+
+	}
 
 
-/**
- * This api creates all the im detail in the database
- * @return imCode
- */
-@PostMapping("/im/addIm")
-private ResponseEntity<ResponseDto> saveIM(@RequestBody IM im) 
-{
-	ResponseDto response=imService.addIm(im);
-	return new ResponseEntity<>(response,HttpStatus.OK);
-}
+	/**
+	 * This api creates all the im detail in the database
+	 * @return imCode
+	 */
+	@PostMapping("/im/addIm")
+	private ResponseEntity<ResponseDto>saveIM(@RequestBody IM im) 
+	{
+		ResponseDto response=imService.addIm(im);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
 
-/**
- * This api updates the im detail in the database
- * @param im
- * @return im
- */
-@PutMapping("/im/updateIm")
-private ResponseEntity<ResponseDto> update(@RequestBody IM im) 
-{
-	ResponseDto response=imService.updateIm(im);
-	return new ResponseEntity<>(response,HttpStatus.OK);
-}
+	/**
+	 * This api updates the im detail in the database
+	 * @param im
+	 * @return im
+	 */
+	@PutMapping("/im/updateIm")
+	private ResponseEntity<ResponseDto> update(@RequestBody IM im) 
+	{
+		ResponseDto response=imService.updateIm(im);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
 
 
-/**
- * This api deactivates the im detail in the database
- * @param im
- * @return im
- */
-@PutMapping("/im/deactivate")
-private ResponseEntity<ResponseDto> deActivate(@RequestBody IMDeactivateReq request) 
-{
-	
+	/**
+	 * This api deactivates the im detail in the database
+	 * @param im
+	 * @return im
+	 */
+	@PutMapping("/im/deactivate")
+	private ResponseEntity<ResponseDto> deActivate(@RequestBody IMDeactivateReq request) 
+	{
+
 		ResponseDto responseDto=imService.isImInactive(request);
 		return new ResponseEntity<>(responseDto,HttpStatus.OK);
-	
-}
+
+	}
 
 
-/**
- * This api activates the im detail in the database
- * @param im
- * @return im
- */
-@PutMapping("/im/activate")
-private IM activate(@RequestBody IM im) 
-{
-	im.setIsImInactive(true);
-//	imService.saveOrUpdate(im);
-return im;
-}
+	/**
+	 * This api activates the im detail in the database
+	 * @param im
+	 * @return im
+	 */
+	@PutMapping("/im/activate")
+	private IM activate(@RequestBody IM im) 
+	{
+		im.setIsImInactive(true);
+		//	imService.saveOrUpdate(im);
+		return im;
+	}
 }
 
