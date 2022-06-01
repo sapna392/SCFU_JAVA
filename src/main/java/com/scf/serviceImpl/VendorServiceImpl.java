@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.scf.dto.ResponseDto;
 import com.scf.dto.VendorDeactivateRequest;
 import com.scf.dto.VendorDetailsResponseDto;
+import com.scf.model.IM;
 import com.scf.model.UserEntity;
 import com.scf.model.Vendor;
 import com.scf.repository.IMRepository;
@@ -68,8 +69,28 @@ public class VendorServiceImpl implements VendorService {
 	 * @param id
 	 * @return vendor
 	 */
-	public Optional<Vendor> getVendorByCode(int id) {
-		return vendorRepository.findById(id);
+	public VendorDetailsResponseDto getVendorByCode(String id) {
+		VendorDetailsResponseDto response= new VendorDetailsResponseDto();
+		//return vendorRepository.findById(id);
+		try {
+			List<Vendor> vendorList =vendorRepository.findByVendorCode(id);
+		if(!vendorList.isEmpty()) {
+			response.setStatusCode("200");
+			response.setStatus("Success");
+			response.setMsg("Vendor details retreived successfully for !"+id);
+			response.setListOfVendor(vendorList);
+		}
+		else {
+			response.setStatusCode("404");
+			response.setStatus("Failure");
+			response.setMsg("Data not available !");
+		}
+		}
+		catch(Exception e) {
+         log.error("Exception Occurred" +e.getMessage() );
+         response.setMsg(e.getMessage());
+		}
+		return response;
 	}
 
 	/**
@@ -115,15 +136,37 @@ public class VendorServiceImpl implements VendorService {
 	 * 
 	 * @param id
 	 */
-	public void delete(int id) {
-		vendorRepository.deleteById(id);
+	public ResponseDto deleteById(String vendorId) {
+		ResponseDto responseDto= new ResponseDto();
+		try {
+		log.info("delete Vendor started for given VendorCode "+vendorId);
+		vendorRepository.deleteIMById(vendorId);
+		responseDto.setStatus("Success");
+		responseDto.setStatusCode("200");
+		responseDto.setMsg("Vendor deleted successfully for "+vendorId);
+		}
+		catch(Exception e) {
+             log.error("Exception Occurred" +e.getMessage() );
+			  responseDto.setMsg(e.getMessage());	
+		}
+		return responseDto;
 	}
 
+	
 	@Override
 	public void update(Vendor vendor) {
-		// TODO Auto-generated method stub
+		log.info("update vendor details  ");
+		try {
+		vendorRepository.save(vendor);
+		log.info("Vendoe details updated successfully !");
+		}
+		catch(Exception e) {
+            log.error("Exception Occurred" +e.getMessage() );
+			 
+		}
 		
 	}
+	
 
 	@Override
 	public ResponseDto deActivate(VendorDeactivateRequest request) {
@@ -147,5 +190,7 @@ public class VendorServiceImpl implements VendorService {
 			}
 		return responseDto;
 	}
+
+	
 
 }

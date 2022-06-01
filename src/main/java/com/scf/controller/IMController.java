@@ -72,7 +72,7 @@ public class IMController
 	 * @param imId
 	 * @return success or failure response
 	 */
-	@DeleteMapping("/im/deleteim/{imid}")
+	@DeleteMapping("/im/deleteIm/{imid}")
 	private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
 	{
 

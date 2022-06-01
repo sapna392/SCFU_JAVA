@@ -19,9 +19,9 @@ public interface VendorService {
 
 	VendorDetailsResponseDto getAllVendor();
 
-	Optional<IMDetailsResponseDto> getVendorByCode(String vendorCode);
+	VendorDetailsResponseDto getVendorByCode(String vendorCode);
 
-	void delete(int vendorId);
+	ResponseDto deleteById(String vendorId);
 
 	ResponseDto addVendor(Vendor vendor);
 
