@@ -26,6 +26,93 @@ public class Vendor
 	@Column
 	private String vendorCode;
 
+	//new feilds added
+	@Column
+	private String imCode;
+	@Column
+	private String businessGroup;
+	@Column
+	private String creditAccBank;
+	@Column
+	private String creditAcctbrccode;
+	@Column
+	private String creditAcctname;
+	@Column
+	private String creditAcctno;
+	@Column
+	private String creditCommisionChargeAcctbrccode;
+	@Column
+	private String creditCommisionChargeAcctname;
+	@Column
+	private String creditCommisionChargeAcctno;
+	@Column
+	private String creditInterestAcctbrccode;
+	@Column
+	private String creditInterestAcctname;
+	@Column
+	private String creditInterestAcctno;
+	@Column
+	private String debitAcctbrccode;
+	@Column
+	private String debitAcctname;
+	@Column
+	private String debitAcctno;
+	@Column
+	private String debitCommisionChargeAcctbrccode;
+	@Column
+	private String debitCommisionChargeAcctname;
+	@Column
+	private String debitCommisionChargeAcctno;
+	@Column
+	private String debitInterestAcctbrccode;
+	@Column
+	private String debitInterestAcctname;
+	@Column
+	private String debitInterestAcctno;
+	@Column
+	private String debitProcessingChargeAcctname;
+	@Column
+	private String debitProcessingChargeAcctbrccode;
+	@Column
+	private String debitProcessingChargeAcctno;
+	@Column
+	private String defaultCreditAccBank;
+	@Column
+	private String defaultCreditAcctbrccode;
+	@Column
+	private String	defaultCreditAcctname;
+	@Column
+	private String	defaultCreditAcctno;
+	@Column
+	private String 	isVendorAutoOnboarding;
+
+	@Column
+	private String 	loanAccNoOwnedBy;
+	@Column
+	private String 	primaryEmail;
+
+	@Column
+	private String 	vendorAdvanceAcctbrccode;
+	@Column
+	private String 		vendorAdvanceAcctname;
+	@Column
+	private String 		vendorAdvanceAcctno;
+	@Column
+	private String 		vendorCommissionCharges;
+	@Column
+	private String 	vendorDueDate;
+	@Column
+	private String 	vendorInterestRecoverOn;
+	@Column
+	private String 	vendorLimit;
+	@Column
+	private String 	vendorLimitExpireDate;
+	@Column
+	private String 	 vendorNarrativeCount;
+	@Column
+	private String 	vendorPostageCharges;
+	@Column
+	private String 	vendorTaxCharges;
 	@Column
 	private String name;
 	@Column

@@ -1,10 +1,8 @@
 package com.scf.model;
 import java.util.Date;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -82,6 +80,13 @@ public class IM
 	private String creditAcctno;
 	@Column
 	private String creditAcctbrccode;
+	
+	@Column
+	private String debitAcctbrccode;
+	@Column
+	private String debitAcctname;
+	@Column
+	private String debitAcctno;
 
 	@Column
 	private String advanceAcctname;
@@ -90,6 +95,9 @@ public class IM
 	@Column
 	private String advanceAcctbrccode;
 
+	@Column
+	private Number historyId;
+	
 	@Column
 	private String status;
 	@Column
@@ -136,7 +144,11 @@ public class IM
 	@Column
 	private String fax;
 	@Column
+	private String hostUniken;
+	@Column
 	private String action;
+	@Column
+	private String loanAccNoOwnedBy;
 	@Column
 	private String loanAccNosharedBy;
 	@Column
@@ -188,8 +200,6 @@ public class IM
 	private Date imInterestRecoverOn;
 	@Column
 	private String imVendorAutoOnboarding;
-<<<<<<< HEAD
-=======
 	@Column
 	private String sharedBy;
 	@Column
@@ -223,9 +233,8 @@ public class IM
 	@Column
 	private String backDatedInvoicing;
 	@Column
-	private Number mumberOfDaysFrom;
+	private Number noOfDaysFrom;
 	@Column
-	private Number mumberOfDaysTo;
->>>>>>> c6127c289b265c9a9a1466079e9f010608627809
+	private Number noOfDaysTo;
 
 	}
