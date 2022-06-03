@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -21,13 +20,13 @@ import lombok.Data;
 public class IM
 {
 
+
+	@Column
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	// @Id
-	@SequenceGenerator(name = "IMSeqGenerator", sequenceName = "mySeq", initialValue = 100, allocationSize = 1000)
-	  @GeneratedValue(generator = "IMSeqGenerator")
+	//	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long imId;
-	
+
+
 	@Column
 	private String imCode;
 	@Column
@@ -189,5 +188,44 @@ public class IM
 	private Date imInterestRecoverOn;
 	@Column
 	private String imVendorAutoOnboarding;
+<<<<<<< HEAD
+=======
+	@Column
+	private String sharedBy;
+	@Column
+	private String overrideCreditPeriodParameters;
+	@Column
+	private String creditPeriod;
+	@Column
+	private Number creditPeriodDefault;
+	@Column
+	private Number creditPeriodMin;
+	@Column
+	private Number creditPeriodMax;
+	@Column
+	private String overrideRateofInt;
+	@Column
+	private Number rateOfInt;
+	@Column
+	private Number effectiveIntRate;
+	@Column
+	private String selectParameterToOverride;
+	@Column
+	private String addorDeduct;
+	@Column
+	private Number defaults;
+	@Column
+	private Number min;
+	@Column
+	private Number max;
+	@Column
+	private Number penalROI;
+	@Column
+	private String backDatedInvoicing;
+	@Column
+	private Number mumberOfDaysFrom;
+	@Column
+	private Number mumberOfDaysTo;
+>>>>>>> c6127c289b265c9a9a1466079e9f010608627809
 
 	}

@@ -15,15 +15,11 @@ import lombok.Data;
 @Data
 @Table (name = "USER_ENTITY")
 public class UserEntity {
-	
 	@Id
 	@Column
 	private String typeOfEntity;
 	@Column
-	private int stratValue;
+	private Long stratValue;
 	@Column
 	private String prefix;
-	
-	
-
 }

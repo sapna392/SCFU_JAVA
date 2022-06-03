@@ -12,6 +12,5 @@ import com.scf.model.UserEntity;
  */
 public interface UserEntityRepository extends CrudRepository<UserEntity, String>
 {
-
 	Optional<UserEntity> findById(String id);
 }
