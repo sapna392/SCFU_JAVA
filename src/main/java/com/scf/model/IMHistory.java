@@ -1,13 +1,9 @@
 package com.scf.model;
 import java.util.Date;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -21,17 +17,17 @@ import lombok.Data;
 @Table (name = "ONB_IM_MASTER_HISTORY")
 public class IMHistory
 {
-	
-	
 
-    
+
+
+
 	@Column
-  	@Id
-//  	@SequenceGenerator(name = "IMSeqGenerator", sequenceName = "mySeq", initialValue = 100, allocationSize = 1000)
-//  	@GeneratedValue(generator = "IMSeqGenerator")
-  	private Long imId;
-	
-	
+	@Id
+	//  	@SequenceGenerator(name = "IMSeqGenerator", sequenceName = "mySeq", initialValue = 100, allocationSize = 1000)
+	//  	@GeneratedValue(generator = "IMSeqGenerator")
+	private Long imId;
+
+
 	@Column
 	private String imCode;
 	@Column
@@ -232,9 +228,9 @@ public class IMHistory
 	private Number mumberOfDaysFrom;
 	@Column
 	private Number mumberOfDaysTo;
-	
-	
-	
+
+
+
 	public IMHistory(IM im) {
 		this.imId = im.getImId();
 		this.imCode = im.getImCode();
@@ -336,12 +332,12 @@ public class IMHistory
 	public IMHistory() {
 		super();
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 
 }

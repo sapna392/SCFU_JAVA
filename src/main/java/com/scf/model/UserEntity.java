@@ -15,7 +15,6 @@ import lombok.Data;
 @Data
 @Table (name = "USER_ENTITY")
 public class UserEntity {
-	
 	@Id
 	@Column
 	private String typeOfEntity;
@@ -23,7 +22,4 @@ public class UserEntity {
 	private Long stratValue;
 	@Column
 	private String prefix;
-	
-	
-
 }

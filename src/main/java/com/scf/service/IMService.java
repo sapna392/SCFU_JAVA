@@ -1,8 +1,5 @@
 package com.scf.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
@@ -21,7 +18,5 @@ public interface IMService {
 	ResponseDto isImInactive(IMDeactivateReq request);
 
 	ResponseDto updateIm(IM im);
-	
-	
 
 }

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.scf.model.IM;
 import com.scf.model.Vendor;
 
 
@@ -21,14 +20,13 @@ public interface VendorRepository extends CrudRepository<Vendor, Long>
 	@Query("Update Vendor SET isVendorInactive=:deactivateFlag WHERE vendorCode=:vendorCode")
 	public void deactvateVendor(String vendorCode, boolean deactivateFlag);
 
-	//public List<IM> findByVendorCode(int id);
-	@Query("select * from Vendor  WHERE vendorCode=:id")
 	public List<Vendor> findByVendorCode(String id);
-	
+
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true,value="Delete from ONB_VENDOR_MASTER where VENDOR_CODE=:vendorId")
 	public void deleteIMById(String vendorId);
 	
-	
+	@Query(nativeQuery = true,value="SELECT vendor_seq_code from ONB_VENDOR_MASTER order by vendor_seq_code desc limit 1")
+	public Long getTopId();
 }

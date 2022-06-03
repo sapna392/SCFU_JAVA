@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scf.model.Dealer;
-import com.scf.serviceImpl.DealerService;
+import com.scf.service.impl.DealerService;
 
 
 /**

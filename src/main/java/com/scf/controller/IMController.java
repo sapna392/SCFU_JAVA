@@ -16,10 +16,9 @@ import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
 import com.scf.model.IM;
-import com.scf.repository.IMHistoryRepository;
 import com.scf.repository.IMRepository;
 import com.scf.service.IMService;
-import com.scf.serviceImpl.UserEntityService;
+import com.scf.service.impl.UserEntityService;
 
 /**
  * @author Naseem

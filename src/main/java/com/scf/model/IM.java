@@ -1,13 +1,9 @@
 package com.scf.model;
 import java.util.Date;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -22,13 +18,13 @@ import lombok.Data;
 public class IM
 {
 
-    
+
 	@Column
-	  @Id
-//	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-  	private Long imId;
-	
-	
+	@Id
+	//	 @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long imId;
+
+
 	@Column
 	private String imCode;
 	@Column
@@ -229,6 +225,6 @@ public class IM
 	private Number mumberOfDaysFrom;
 	@Column
 	private Number mumberOfDaysTo;
-	
+
 
 }
