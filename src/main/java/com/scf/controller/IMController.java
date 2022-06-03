@@ -38,20 +38,15 @@ public class IMController
 
 	@Autowired
 	IMRepository repo;
-
-
 	/**
 	 * This api retrieves all the im detail from the database 
 	 * @return success or failure response
 	 */
 	@GetMapping("/im/getImDetails")
 	private ResponseEntity<IMDetailsResponseDto > getAllIM() {
-
-        IMDetailsResponseDto response = imService.getAllIM();
+		IMDetailsResponseDto response = imService.getAllIM();
 		return new ResponseEntity<>(response,HttpStatus.OK);
- }
-
-
+	}
 	/**
 	 * This api retrieves the detail of a specific im based on 
 	 * @param imId
@@ -62,10 +57,7 @@ public class IMController
 	{
 		IMDetailsResponseDto response= imService.getIMByCode(imCode);
 		return new ResponseEntity<>(response,HttpStatus.OK);
-
 	}
-
-
 	/**
 	 * This api deletes the detail of a specific im based on 
 	 * @param imId
@@ -74,10 +66,8 @@ public class IMController
 	@DeleteMapping("/im/deleteIm/{imid}")
 	private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
 	{
-
 		ResponseDto response =imService.delete(imCode);
 		return new ResponseEntity<>(response,HttpStatus.OK);
-
 	}
 
 
@@ -91,7 +81,6 @@ public class IMController
 		ResponseDto response=imService.addIm(im);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-
 	/**
 	 * This api updates the im detail in the database
 	 * @param im
@@ -103,8 +92,6 @@ public class IMController
 		ResponseDto response=imService.updateIm(im);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-
-
 	/**
 	 * This api deactivates the im detail in the database
 	 * @param im
@@ -113,13 +100,9 @@ public class IMController
 	@PutMapping("/im/deactivate")
 	private ResponseEntity<ResponseDto> deActivate(@RequestBody IMDeactivateReq request) 
 	{
-
 		ResponseDto responseDto=imService.isImInactive(request);
 		return new ResponseEntity<>(responseDto,HttpStatus.OK);
-
 	}
-
-
 	/**
 	 * This api activates the im detail in the database
 	 * @param im

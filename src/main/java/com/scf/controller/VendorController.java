@@ -66,8 +66,6 @@ public class VendorController
 		ResponseDto response =vendorService.deleteById(vendorId);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-
-
 	/**
 	 * This api Add all the vendor detail in the database
 	 * @return vendorCode
@@ -78,8 +76,6 @@ public class VendorController
 		ResponseDto response =  vendorService.addVendor(vendor);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-
-
 	/**
 	 * This api updates the vendor detail in the database
 	 * @param vendor
@@ -91,8 +87,6 @@ public class VendorController
 		vendorService.update(vendor);
 		return vendor;
 	}
-
-
 	/**
 	 * This api deactivates the vendor detail in the database
 	 * @param vendor
@@ -104,8 +98,6 @@ public class VendorController
 		ResponseDto responseDto=vendorService.deActivate(requets);
 		return new ResponseEntity<>(responseDto,HttpStatus.OK);
 	}
-
-
 	/**
 	 * This api activates the vendor detail in the database
 	 * @param vendor

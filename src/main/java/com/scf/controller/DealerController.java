@@ -26,31 +26,25 @@ import com.scf.service.impl.DealerService;
 @RequestMapping("scfu/api")
 public class DealerController 
 {
-
 	@Autowired
 	DealerService dealerService;
-
-
 	/**
 	 * This api retrieves all the dealer detail from the database 
 	 * @return success or failure response
 	 */
 	@GetMapping("/dealer")
-	private ResponseEntity<List<Dealer>> getAllDealer() 
+	public ResponseEntity<List<Dealer>> getAllDealer() 
 	{
 		try {
 			List<Dealer> dealer = dealerService.getAllDealer();
-
 			if (dealer.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
-
 			return new ResponseEntity<>(dealerService.getAllDealer(), HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 
 	/**
 	 * This api retrieves the detail of a specific dealer based on 
@@ -58,26 +52,22 @@ public class DealerController
 	 * @return success or failure response
 	 */
 	@GetMapping("/dealer/{dealerid}")
-	private ResponseEntity<Dealer> getDealer(@PathVariable("detailid") int detailId) 
+	public ResponseEntity<Dealer> getDealer(@PathVariable("detailid") int detailId) 
 	{
 		Optional<Dealer> detailData = dealerService.getDealerByCode(detailId);
-
 		if (detailData.isPresent()) {
 			return new ResponseEntity<>(detailData.get(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
 	}
-
-
 	/**
 	 * This api deletes the detail of a specific dealer based on 
 	 * @param dealerId
 	 * @return success or failure response
 	 */
 	@DeleteMapping("/dealer/{dealerid}")
-	private ResponseEntity<HttpStatus> deleteDealer(@PathVariable("dealerid") int dealerId) 
+	public ResponseEntity<HttpStatus> deleteDealer(@PathVariable("dealerid") int dealerId) 
 	{
 		try {
 			dealerService.delete(dealerId);
@@ -86,57 +76,49 @@ public class DealerController
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-
 	/**
 	 * This api creates all the dealer detail in the database
 	 * @return dealerCode
 	 */
 	@PostMapping("/dealer")
-	private int saveDealer(@RequestBody Dealer dealer) 
+	public int saveDealer(@RequestBody Dealer dealer) 
 	{
 		dealerService.saveOrUpdate(dealer);
-	return dealer.getDealerCode();
+		return dealer.getDealerCode();
 	}
-
-
 	/**
 	 * This api updates the dealer detail in the database
 	 * @param dealer
 	 * @return dealer
 	 */
 	@PutMapping("/dealer")
-	private Dealer update(@RequestBody Dealer dealer) 
+	public Dealer update(@RequestBody Dealer dealer) 
 	{
 		dealerService.saveOrUpdate(dealer);
-	return dealer;
+		return dealer;
 	}
-	 
-
 	/**
 	 * This api deactivates the dealer detail in the database
 	 * @param dealer
 	 * @return dealer
 	 */
 	@PutMapping("/dealer/deactivate")
-	private Dealer deActivate(@RequestBody Dealer dealer) 
+	public Dealer deActivate(@RequestBody Dealer dealer) 
 	{
 		dealer.setIsDealerInactive(false);
 		dealerService.saveOrUpdate(dealer);
-	return dealer;
+		return dealer;
 	}
-
-
 	/**
 	 * This api activates the dealer detail in the database
 	 * @param dealer
 	 * @return dealer
 	 */
 	@PutMapping("/dealer/activate")
-	private Dealer activate(@RequestBody Dealer dealer) 
+	public Dealer activate(@RequestBody Dealer dealer) 
 	{
 		dealer.setIsDealerInactive(true);
 		dealerService.saveOrUpdate(dealer);
-	return dealer;
+		return dealer;
 	}
-	}
+}
