@@ -17,7 +17,6 @@ import com.scf.model.IM;
 public interface IMRepository extends JpaRepository<IM, String>
 {
 
-	public List<IM> findByImCode(String imCode);
 	@Query(nativeQuery = true,value="SELECT im_id from ONB_IM_MASTER order by IM_ID desc limit 1")
 	public Long getTopId();
 
