@@ -12,6 +12,6 @@ import com.scf.model.IM;
 public interface IMRepository extends CrudRepository<IM, Integer>
 {
 
-	@Query(nativeQuery = true,value="SELECT Top 1 im_id from ONB_IM_MASTER order by IM_ID desc")
+	@Query(nativeQuery = true,value="SELECT im_id from ONB_IM_MASTER order by IM_ID desc limit 1")
 	public Long getTopId();
 }
