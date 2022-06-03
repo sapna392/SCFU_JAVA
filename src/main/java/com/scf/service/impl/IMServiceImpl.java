@@ -75,7 +75,7 @@ public class IMServiceImpl implements IMService
 	{
 		IMDetailsResponseDto response = new IMDetailsResponseDto();
 		try {
-			List<IM> im				  = imRepository.findByImCode(imCode);
+			List<IM> im	= imRepository.findByImCode(imCode);
 			if(!im.isEmpty()) {
 				response.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				response.setStatus(StatusConstant.STATUS_SUCCESS);

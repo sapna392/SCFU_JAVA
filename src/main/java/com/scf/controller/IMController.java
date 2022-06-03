@@ -16,8 +16,10 @@ import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
 import com.scf.model.IM;
-import com.scf.serviceImpl.IMService;
-import com.scf.serviceImpl.UserEntityService;
+import com.scf.repository.IMRepository;
+import com.scf.service.IMService;
+import com.scf.service.impl.UserEntityService;
+
 
 /**
  * @author Naseem
@@ -25,7 +27,7 @@ import com.scf.serviceImpl.UserEntityService;
  */
 @RestController
 @RequestMapping("scfu/api")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class IMController 
 {
 
@@ -51,7 +53,7 @@ public class IMController
 	 * @param imId
 	 * @return success or failure response
 	 */
-	@GetMapping("/im/getim/{imid}")
+	@GetMapping("/im/getImByCode/{imid}")
 	private ResponseEntity<IMDetailsResponseDto > getIM(@PathVariable("imid") String imCode) 
 	{
 		IMDetailsResponseDto response= imService.getIMByCode(imCode);
@@ -62,7 +64,7 @@ public class IMController
 	 * @param imId
 	 * @return success or failure response
 	 */
-	@DeleteMapping("/im/deleteIm/{imid}")
+	@DeleteMapping("/im/deleteImById/{imid}")
 	private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
 	{
 		ResponseDto response =imService.delete(imCode);

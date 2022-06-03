@@ -29,4 +29,7 @@ public interface IMRepository extends JpaRepository<IM, String>
 	@Modifying
 	@Query(nativeQuery = true,value="Delete from ONB_IM_MASTER where IM_CODE=:imCode")
 	public void deleteIMById(@Param("imCode") String imCode);
+
+	
+	public List<IM> findByImCode(String imCode);
 }

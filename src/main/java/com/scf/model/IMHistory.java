@@ -283,7 +283,7 @@ public class IMHistory
 		this.isImInactive = im.getIsImInactive();
 		this.fax = im.getFax();
 		this.action = im.getAction();
-		this.historyId = im.getHistoryId();
+	//	this.historyId = im.get
 		this.loanAccNosharedBy = im.getLoanAccNosharedBy();
 		this.businessGroup = im.getBusinessGroup();
 		this.backDatedInvoiceDays = im.getBackDatedInvoiceDays();
@@ -332,12 +332,6 @@ public class IMHistory
 	public IMHistory() {
 		super();
 	}
-
-
-
-
-
-
 
 
 }

@@ -1,10 +1,7 @@
 package com.scf.model;
 import java.util.Date;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -188,8 +185,7 @@ public class IM
 	private Date imInterestRecoverOn;
 	@Column
 	private String imVendorAutoOnboarding;
-<<<<<<< HEAD
-=======
+
 	@Column
 	private String sharedBy;
 	@Column
@@ -226,6 +222,6 @@ public class IM
 	private Number mumberOfDaysFrom;
 	@Column
 	private Number mumberOfDaysTo;
->>>>>>> c6127c289b265c9a9a1466079e9f010608627809
+
 
 	}
