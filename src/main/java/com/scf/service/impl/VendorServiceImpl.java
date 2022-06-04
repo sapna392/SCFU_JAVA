@@ -183,4 +183,29 @@ public class VendorServiceImpl implements VendorService {
 		}
 		return responseDto;
 	}
+	
+	
+	public VendorDetailsResponseDto getAllVendorByImCode(String imCode) {
+		VendorDetailsResponseDto response = new VendorDetailsResponseDto();
+		List<Vendor> vendor 			  = new ArrayList<>();
+		try {
+			vendorRepository.findByImCode(imCode).forEach(vendor::add);
+			if(!vendor.isEmpty()) {
+				response.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+				response.setStatus(StatusConstant.STATUS_SUCCESS);
+				response.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_LIST_RETRIVED_SUCESSFULLY);
+				response.setListOfVendor(vendor);
+			}
+			else {
+				response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				response.setStatus(StatusConstant.STATUS_FAILURE);
+				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
+			}
+		}
+		catch(Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED +e.getMessage() );
+			response.setMsg(e.getMessage());
+		}
+		return response;
+	}
 }
