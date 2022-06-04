@@ -29,4 +29,6 @@ public interface VendorRepository extends CrudRepository<Vendor, Long>
 	
 	@Query(nativeQuery = true,value="SELECT vendor_seq_code from ONB_VENDOR_MASTER order by vendor_seq_code desc limit 1")
 	public Long getTopId();
+	
+	public List<Vendor> findByImCode(String imCode);
 }

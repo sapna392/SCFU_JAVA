@@ -1,11 +1,7 @@
 package com.scf.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
-import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
 import com.scf.dto.VendorDeactivateRequest;
 import com.scf.dto.VendorDetailsResponseDto;
@@ -28,5 +24,7 @@ public interface VendorService {
 	void update(Vendor vendor);
 
 	ResponseDto deActivate(VendorDeactivateRequest request);
+	
+	VendorDetailsResponseDto getAllVendorByImCode(String imCode);
 
 }
