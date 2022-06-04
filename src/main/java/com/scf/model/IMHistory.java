@@ -225,9 +225,9 @@ public class IMHistory
 	@Column
 	private String backDatedInvoicing;
 	@Column
-	private Number mumberOfDaysFrom;
+	private String mumberOfDaysFrom;
 	@Column
-	private Number mumberOfDaysTo;
+	private String mumberOfDaysTo;
 
 
 

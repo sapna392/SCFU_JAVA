@@ -233,8 +233,8 @@ public class IM
 	@Column
 	private String backDatedInvoicing;
 	@Column
-	private Number noOfDaysFrom;
+	private String noOfDaysFrom;
 	@Column
-	private Number noOfDaysTo;
+	private String noOfDaysTo;
 
 	}
