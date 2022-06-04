@@ -225,9 +225,9 @@ public class IMHistory
 	@Column
 	private String backDatedInvoicing;
 	@Column
-	private String mumberOfDaysFrom;
+	private String noOfDaysFrom;
 	@Column
-	private String mumberOfDaysTo;
+	private String noOfDaysTo;
 
 
 
@@ -323,8 +323,8 @@ public class IMHistory
 		this.max = im.getMax();
 		this.penalROI = im.getPenalROI();
 		this.backDatedInvoicing = im.getBackDatedInvoicing();
-		this.mumberOfDaysFrom = im.getNoOfDaysFrom();
-		this.mumberOfDaysTo = im.getNoOfDaysTo();
+		this.noOfDaysFrom = im.getNoOfDaysFrom();
+		this.noOfDaysTo = im.getNoOfDaysTo();
 	}
 
 
