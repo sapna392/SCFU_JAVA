@@ -323,8 +323,8 @@ public class IMHistory
 		this.max = im.getMax();
 		this.penalROI = im.getPenalROI();
 		this.backDatedInvoicing = im.getBackDatedInvoicing();
-		this.mumberOfDaysFrom = im.getMumberOfDaysFrom();
-		this.mumberOfDaysTo = im.getMumberOfDaysTo();
+		this.mumberOfDaysFrom = im.getNoOfDaysFrom();
+		this.mumberOfDaysTo = im.getNoOfDaysTo();
 	}
 
 

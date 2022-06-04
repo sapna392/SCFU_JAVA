@@ -20,7 +20,6 @@ import com.scf.repository.IMRepository;
 import com.scf.service.IMService;
 import com.scf.service.impl.UserEntityService;
 
-
 /**
  * @author Naseem
  *

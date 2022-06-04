@@ -26,6 +26,7 @@ public class StatusConstant {
 	public static final String STATUS_DESCRIPTION_VENDOR_DELETED_SUCESSFULLY	                             =  "Vendor Details Deleted successfully for!";
 	public static final String STATUS_DESCRIPTION_VENDOR_RETRIVED_SUCESSFULLY	                             =  "Vendor Details Retrived successfully !";
 	public static final String STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY	                                 =  "Vendor Added successfully !";
+	public static final String STATUS_IM_CODE_NOT_FOUND			                 			 		 	     =  "IM Code Not Found !";
 	
 	
 	

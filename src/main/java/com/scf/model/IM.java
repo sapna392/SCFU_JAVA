@@ -79,6 +79,13 @@ public class IM
 	private String creditAcctno;
 	@Column
 	private String creditAcctbrccode;
+	
+	@Column
+	private String debitAcctbrccode;
+	@Column
+	private String debitAcctname;
+	@Column
+	private String debitAcctno;
 
 	@Column
 	private String advanceAcctname;
@@ -87,6 +94,9 @@ public class IM
 	@Column
 	private String advanceAcctbrccode;
 
+	@Column
+	private Number historyId;
+	
 	@Column
 	private String status;
 	@Column
@@ -133,7 +143,11 @@ public class IM
 	@Column
 	private String fax;
 	@Column
+	private String hostUniken;
+	@Column
 	private String action;
+	@Column
+	private String loanAccNoOwnedBy;
 	@Column
 	private String loanAccNosharedBy;
 	@Column
@@ -185,7 +199,6 @@ public class IM
 	private Date imInterestRecoverOn;
 	@Column
 	private String imVendorAutoOnboarding;
-
 	@Column
 	private String sharedBy;
 	@Column
@@ -219,9 +232,8 @@ public class IM
 	@Column
 	private String backDatedInvoicing;
 	@Column
-	private Number mumberOfDaysFrom;
+	private Number noOfDaysFrom;
 	@Column
-	private Number mumberOfDaysTo;
-
+	private Number noOfDaysTo;
 
 	}

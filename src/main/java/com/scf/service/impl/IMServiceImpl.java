@@ -184,6 +184,12 @@ public class IMServiceImpl implements IMService
 	public ResponseDto updateIm(IM im) {
 		ResponseDto responseDto= new ResponseDto();
 		try{
+			if(im.getImCode() == null || im.getImCode().isEmpty()) {
+				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				responseDto.setMsg(StatusConstant.STATUS_IM_CODE_NOT_FOUND);
+				return responseDto;
+			}
 			List<IM> im2 = imRepository.findByImCode(im.getImCode());
 			im.setImId(im2.get(0).getImId());
 			imRepository.save(im);
