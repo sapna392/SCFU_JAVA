@@ -215,11 +215,11 @@ public class IMHistory
 	@Column
 	private String addorDeduct;
 	@Column
-	private Number defaults;
+	private String rateOfInterestDefault;
 	@Column
-	private Number min;
+	private Number rateOfInterestMin;
 	@Column
-	private Number max;
+	private Number rateOfInterestMax;
 	@Column
 	private Number penalROI;
 	@Column
@@ -318,9 +318,9 @@ public class IMHistory
 		this.effectiveIntRate = im.getEffectiveIntRate();
 		this.selectParameterToOverride = im.getSelectParameterToOverride();
 		this.addorDeduct = im.getAddorDeduct();
-		this.defaults = im.getDefaults();
-		this.min = im.getMin();
-		this.max = im.getMax();
+		this.rateOfInterestDefault = im.getRateOfInterestDefault();
+		this.rateOfInterestMin = im.getRateOfInterestMin();
+		this.rateOfInterestMax = im.getRateOfInterestMax();
 		this.penalROI = im.getPenalROI();
 		this.backDatedInvoicing = im.getBackDatedInvoicing();
 		this.noOfDaysFrom = im.getNoOfDaysFrom();

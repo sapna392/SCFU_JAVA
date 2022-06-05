@@ -222,11 +222,11 @@ public class IM
 	@Column
 	private String addorDeduct;
 	@Column
-	private Number defaults;
+	private String rateOfInterestDefault;
 	@Column
-	private Number min;
+	private Number rateOfInterestMin;
 	@Column
-	private Number max;
+	private Number rateOfInterestMax;
 	@Column
 	private Number penalROI;
 	@Column
