@@ -187,7 +187,7 @@ public class IMHistory
 	@Column
 	private Number imTaxCharges;
 	@Column
-	private Date imDueDate;
+	private String imDueDate;
 	@Column
 	private Date imInterestRecoverOn;
 	@Column
