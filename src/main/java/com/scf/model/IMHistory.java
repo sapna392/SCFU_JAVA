@@ -215,7 +215,7 @@ public class IMHistory
 	@Column
 	private String addorDeduct;
 	@Column
-	private String rateOfInterestDefault;
+	private Number rateOfInterestDefault;
 	@Column
 	private Number rateOfInterestMin;
 	@Column
