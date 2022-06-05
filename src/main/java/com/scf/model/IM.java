@@ -196,7 +196,7 @@ public class IM
 	@Column
 	private String imDueDate;
 	@Column
-	private Date imInterestRecoverOn;
+	private String imInterestRecoverOn;
 	@Column
 	private String imVendorAutoOnboarding;
 	@Column
