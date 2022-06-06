@@ -1,4 +1,5 @@
 package com.scf.repository;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,8 +18,8 @@ public interface VendorRepository extends CrudRepository<Vendor, Long>
 {
 	@Transactional
 	@Modifying
-	@Query("Update Vendor SET isVendorInactive=:deactivateFlag WHERE vendorCode=:vendorCode")
-	public void deactvateVendor(String vendorCode, boolean deactivateFlag);
+	@Query("Update Vendor SET isVendorInactive=:deactivateFlag,last_mod_time=:lastModTime WHERE vendorCode=:vendorCode")
+	public void deactvateVendor(String vendorCode, boolean deactivateFlag,Date lastModTime);
 
 	public List<Vendor> findByVendorCode(String id);
 
@@ -31,4 +32,9 @@ public interface VendorRepository extends CrudRepository<Vendor, Long>
 	public Long getTopId();
 	
 	public List<Vendor> findByImCode(String imCode);
+	
+	@Transactional
+	@Modifying
+	@Query("Update Vendor SET isVendorInactive=:activateFlag,last_mod_time=:lastModTime WHERE vendorCode=:vendorCode")
+	public void actvateVendor(String vendorCode, boolean activateFlag,Date lastModTime);
 }

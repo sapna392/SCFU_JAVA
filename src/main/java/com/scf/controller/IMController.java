@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scf.dto.IMActivateRequest;
 import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
@@ -43,7 +44,7 @@ public class IMController
 	 * @return success or failure response
 	 */
 	@GetMapping("/im/getImDetails")
-	private ResponseEntity<IMDetailsResponseDto > getAllIM() {
+	public ResponseEntity<IMDetailsResponseDto > getAllIM() {
 		IMDetailsResponseDto response = imService.getAllIM();
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
@@ -53,7 +54,7 @@ public class IMController
 	 * @return success or failure response
 	 */
 	@GetMapping("/im/getImByCode/{imid}")
-	private ResponseEntity<IMDetailsResponseDto > getIM(@PathVariable("imid") String imCode) 
+	public ResponseEntity<IMDetailsResponseDto > getIM(@PathVariable("imid") String imCode) 
 	{
 		IMDetailsResponseDto response= imService.getIMByCode(imCode);
 		return new ResponseEntity<>(response,HttpStatus.OK);
@@ -64,7 +65,7 @@ public class IMController
 	 * @return success or failure response
 	 */
 	@DeleteMapping("/im/deleteImById/{imid}")
-	private ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
+	public ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) 
 	{
 		ResponseDto response =imService.delete(imCode);
 		return new ResponseEntity<>(response,HttpStatus.OK);
@@ -76,7 +77,7 @@ public class IMController
 	 * @return imCode
 	 */
 	@PostMapping("/im/addIm")
-	private ResponseEntity<ResponseDto>saveIM(@RequestBody IM im) 
+	public ResponseEntity<ResponseDto>saveIM(@RequestBody IM im) 
 	{
 		ResponseDto response=imService.addIm(im);
 		return new ResponseEntity<>(response,HttpStatus.OK);
@@ -87,7 +88,7 @@ public class IMController
 	 * @return im
 	 */
 	@PutMapping("/im/updateIm")
-	private ResponseEntity<ResponseDto> update(@RequestBody IM im) 
+	public ResponseEntity<ResponseDto> update(@RequestBody IM im) 
 	{
 		ResponseDto response=imService.updateIm(im);
 		return new ResponseEntity<>(response,HttpStatus.OK);
@@ -98,7 +99,7 @@ public class IMController
 	 * @return im
 	 */
 	@PutMapping("/im/deactivate")
-	private ResponseEntity<ResponseDto> deActivate(@RequestBody IMDeactivateReq request) 
+	public ResponseEntity<ResponseDto> deActivate(@RequestBody IMDeactivateReq request) 
 	{
 		ResponseDto responseDto=imService.isImInactive(request);
 		return new ResponseEntity<>(responseDto,HttpStatus.OK);
@@ -109,11 +110,9 @@ public class IMController
 	 * @return im
 	 */
 	@PutMapping("/im/activate")
-	private IM activate(@RequestBody IM im) 
+    public ResponseEntity<ResponseDto>activateIM(@RequestBody IMActivateRequest request) 
 	{
-		im.setIsImInactive(true);
-		//	imService.saveOrUpdate(im);
-		return im;
+		ResponseDto responseDto=imService.activeIM(request);
+		return new ResponseEntity<>(responseDto,HttpStatus.OK);
 	}
 }
-

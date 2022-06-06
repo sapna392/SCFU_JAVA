@@ -16,6 +16,7 @@ public class StatusConstant {
 	public static final String STATUS_PREFIX_NOT_AVAILAIBLE	                 			 		 		     =  "Prefix Details Not Found";
 	public static final String STATUS_IM_UPDATED_SUCCESSFULLY	                 			 		 	     =  "IM updated successfully !";
 	public static final String STATUS_IM_DEACTIVATED_SUCCESSFULLY	                 			 		     =  "IM Deactivated successfully !";
+	public static final String STATUS_IM_ACTIVATED_SUCCESSFULLY	                 			 		         =  "IM Activated successfully !";
 	public static final String STATUS_IM_DELETED_SUCCESSFULLY	                 			 		         =  "IM Deleted successfully !";
 	
 	public static final String EXCEPTION_OCCURRED	                 			 		        		     =  "Exception Occurred!";
@@ -27,6 +28,12 @@ public class StatusConstant {
 	public static final String STATUS_DESCRIPTION_VENDOR_RETRIVED_SUCESSFULLY	                             =  "Vendor Details Retrived successfully !";
 	public static final String STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY	                                 =  "Vendor Added successfully !";
 	public static final String STATUS_IM_CODE_NOT_FOUND			                 			 		 	     =  "IM Code Not Found !";
+	public static final String IM_PENDING_STATUS				                 			 		 	     =  "Authorization Pending";
+	public static final String IM_AUTHORISED_STATUS				                 			 		 	     =  "Authorised";
+	public static final String VENDOR_PENDING_STATUS				                 			 		 	 =  "Authorization Pending";
+	public static final String VENDOR_AUTHORISED_STATUS				                 			 		 	 =  "Authorised";
+	public static final String STATUS_DESCRIPTION_VENDOR_ACTIVATED_SUCESSFULLY	                             =  "Vendor Activated successfully for  !";
+	
 	
 	
 	

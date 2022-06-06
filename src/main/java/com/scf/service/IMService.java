@@ -1,5 +1,6 @@
 package com.scf.service;
 
+import com.scf.dto.IMActivateRequest;
 import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
@@ -19,4 +20,8 @@ public interface IMService {
 
 	ResponseDto updateIm(IM im);
 
+	ResponseDto activeIM(IMActivateRequest request);
+	
+	ResponseDto validateIMOBNumberAndEmail(IMActivateRequest request);
+	
 }

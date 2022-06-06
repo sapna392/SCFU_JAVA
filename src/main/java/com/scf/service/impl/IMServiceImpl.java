@@ -1,4 +1,6 @@
 package com.scf.service.impl;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -6,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.scf.dto.IMActivateRequest;
 import com.scf.dto.IMDeactivateReq;
 import com.scf.dto.IMDetailsResponseDto;
 import com.scf.dto.ResponseDto;
@@ -116,9 +119,13 @@ public class IMServiceImpl implements IMService
 					im.setImId(maxId+1);
 					im.setImCode(prefix+(maxId+1));
 				}
+				im.setCreationTime(Date.valueOf(LocalDate.now()));
+				im.setStatus(StatusConstant.IM_PENDING_STATUS);
 				imRepository.save(im);
 				// Im details added to onb_im_master_history  
 				IMHistory iHis = new IMHistory(im);
+				iHis.setCreationTime(Date.valueOf(LocalDate.now()));
+				iHis.setStatus(StatusConstant.IM_PENDING_STATUS);
 				imHistoryRepository.save(iHis);
 
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
@@ -167,20 +174,19 @@ public class IMServiceImpl implements IMService
 		ResponseDto responseDto= new ResponseDto();
 		String imCode =request.getImCode();
 		try{
-			imRepository.isImInactive(imCode,request.getIsImInactive());
+			imRepository.isImInactive(imCode,request.getIsImInactive(),Date.valueOf(LocalDate.now()));
 			log.info(StatusConstant.STATUS_IM_DEACTIVATED_SUCCESSFULLY+imCode);
 			responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 			responseDto.setMsg(StatusConstant.STATUS_IM_DEACTIVATED_SUCCESSFULLY+imCode);
 		}
 		catch(Exception e) {
-			log.error("Exception Occurred" +e.getMessage() );
+			log.error(StatusConstant.EXCEPTION_OCCURRED +e.getMessage() );
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
 	}
 
-	@Override
 	public ResponseDto updateIm(IM im) {
 		ResponseDto responseDto= new ResponseDto();
 		try{
@@ -199,6 +205,37 @@ public class IMServiceImpl implements IMService
 			responseDto.setMsg(StatusConstant.STATUS_IM_UPDATED_SUCCESSFULLY);
 		}
 		catch(Exception e) {
+			log.error("Exception Occurred" +e.getMessage() );
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
+	}
+	/**
+	 * Activating IM  by using IMCode
+	 */
+	public ResponseDto activeIM(IMActivateRequest request)
+	{
+		ResponseDto responseDto= new ResponseDto();
+		String imCode =request.getImCode();
+		try{
+			imRepository.activateIm(imCode,request.getIsImInactive(),Date.valueOf(LocalDate.now()));
+			log.info(StatusConstant.STATUS_IM_DEACTIVATED_SUCCESSFULLY+imCode);
+			responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+			responseDto.setMsg(StatusConstant.STATUS_IM_ACTIVATED_SUCCESSFULLY+imCode);
+		}
+		catch(Exception e) {
+			log.error("Exception Occurred" +e.getMessage() );
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
+	}
+
+	public ResponseDto validateIMOBNumberAndEmail(IMActivateRequest request) {
+		ResponseDto responseDto= new ResponseDto();
+		try {
+			//here we will call sms service and eamil service for validate the same
+		}catch(Exception e) {
 			log.error("Exception Occurred" +e.getMessage() );
 			responseDto.setMsg(e.getMessage());
 		}

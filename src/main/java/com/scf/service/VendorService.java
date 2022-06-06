@@ -3,6 +3,7 @@ package com.scf.service;
 import org.springframework.stereotype.Service;
 
 import com.scf.dto.ResponseDto;
+import com.scf.dto.VendoActivateRequest;
 import com.scf.dto.VendorDeactivateRequest;
 import com.scf.dto.VendorDetailsResponseDto;
 import com.scf.model.Vendor;
@@ -26,5 +27,7 @@ public interface VendorService {
 	ResponseDto deActivate(VendorDeactivateRequest request);
 	
 	VendorDetailsResponseDto getAllVendorByImCode(String imCode);
+	
+	ResponseDto activateVendor(VendoActivateRequest request);
 
 }

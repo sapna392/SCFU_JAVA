@@ -1,4 +1,5 @@
 package com.scf.repository;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,12 +23,18 @@ public interface IMRepository extends JpaRepository<IM, String>
 
 	@Transactional
 	@Modifying
-	@Query("Update IM SET isImInactive=:isImInactive WHERE imCode=:imCode")
-	public void isImInactive(@Param("imCode") String imCode,@Param("isImInactive") Boolean isImInactive);
+	@Query("Update IM SET isImInactive=:isImInactive,last_mod_time=:lastModificationTime WHERE imCode=:imCode")
+	public void isImInactive(@Param("imCode") String imCode,@Param("isImInactive") Boolean isImInactive,Date lastModificationTime);
 
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true,value="Delete from ONB_IM_MASTER where IM_CODE=:imCode")
 	public void deleteIMById(@Param("imCode") String imCode);
 	public List<IM>findByImCode(String imCode);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("Update IM SET isImInactive=:isImInactive,last_mod_time=:lastModificationTime WHERE imCode=:imCode")
+	public void activateIm(@Param("imCode") String imCode,@Param("isImInactive") Boolean isImInactive,Date lastModificationTime);
 }

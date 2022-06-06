@@ -1,5 +1,7 @@
 package com.scf.service.impl;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.scf.dto.ResponseDto;
+import com.scf.dto.VendoActivateRequest;
 import com.scf.dto.VendorDeactivateRequest;
 import com.scf.dto.VendorDetailsResponseDto;
 import com.scf.model.UserEntity;
@@ -114,6 +117,8 @@ public class VendorServiceImpl implements VendorService {
 					vendor.setVendorSeqCode(maxId+1);
 					vendor.setVendorCode(prefix+(maxId+1));
 				}
+				vendor.setCreationTime(Date.valueOf(LocalDate.now()));
+				vendor.setStatus(StatusConstant.VENDOR_PENDING_STATUS);
 				vendorRepository.save(vendor);
 				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
@@ -156,6 +161,7 @@ public class VendorServiceImpl implements VendorService {
 	public void update(Vendor vendor) {
 		log.info("update vendor details  ");
 		try {
+			vendor.setLastModTime(Date.valueOf(LocalDate.now()));
 			vendorRepository.save(vendor);
 			log.info(StatusConstant.STATUS_DESCRIPTION_VENDOR_UPDATED_SUCESSFULLY);
 		}
@@ -171,7 +177,7 @@ public class VendorServiceImpl implements VendorService {
 		boolean deactivateFlag  = request.getIsVendorDeativate();
 		try{
 			log.info("Start Vendor deactivat for "+vendorCode);
-			vendorRepository.deactvateVendor(vendorCode,deactivateFlag);
+			vendorRepository.deactvateVendor(vendorCode,deactivateFlag,Date.valueOf(LocalDate.now()));
 			log.info(StatusConstant.STATUS_DESCRIPTION_VENDOR_DEACTIVATED_SUCESSFULLY+vendorCode);
 			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 			responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
@@ -207,5 +213,24 @@ public class VendorServiceImpl implements VendorService {
 			response.setMsg(e.getMessage());
 		}
 		return response;
+	}
+	
+	public ResponseDto activateVendor(VendoActivateRequest request) {
+		ResponseDto responseDto = new ResponseDto();
+		String vendorCode       = request.getVendorCode();
+		boolean activateFlag    = request.getIsVendorInActive();
+		try{
+			log.info("Start Vendor activate for "+vendorCode);
+			vendorRepository.actvateVendor(vendorCode,activateFlag,Date.valueOf(LocalDate.now()));
+			log.info(StatusConstant.STATUS_DESCRIPTION_VENDOR_DEACTIVATED_SUCESSFULLY+vendorCode);
+			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+			responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+			responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ACTIVATED_SUCESSFULLY+vendorCode);
+		}
+		catch(Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED +e.getMessage() );
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
 	}
 }

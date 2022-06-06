@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scf.dto.ResponseDto;
+import com.scf.dto.VendoActivateRequest;
 import com.scf.dto.VendorDeactivateRequest;
 import com.scf.dto.VendorDetailsResponseDto;
 import com.scf.model.Vendor;
@@ -98,6 +99,12 @@ public class VendorController
 	public ResponseEntity<ResponseDto> deActivate(@RequestBody VendorDeactivateRequest requets) 
 	{
 		ResponseDto responseDto=vendorService.deActivate(requets);
+		return new ResponseEntity<>(responseDto,HttpStatus.OK);
+	}
+	@PutMapping("/activateVendor")
+	public ResponseEntity<ResponseDto> deActivate(@RequestBody VendoActivateRequest requets) 
+	{
+		ResponseDto responseDto=vendorService.activateVendor(requets);
 		return new ResponseEntity<>(responseDto,HttpStatus.OK);
 	}
 	
