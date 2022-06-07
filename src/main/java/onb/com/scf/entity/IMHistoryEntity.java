@@ -225,6 +225,8 @@ public class IMHistoryEntity {
 	private String noOfDaysFrom;
 	@Column
 	private String noOfDaysTo;
+	@Column
+	private String remark;
 
 	public IMHistoryEntity(IMEntity im) {
 		this.imId = im.getImId();
@@ -320,6 +322,9 @@ public class IMHistoryEntity {
 		this.backDatedInvoicing = im.getBackDatedInvoicing();
 		this.noOfDaysFrom = im.getNoOfDaysFrom();
 		this.noOfDaysTo = im.getNoOfDaysTo();
+		this.status = im.getStatus();
+		this.creationTime = im.getCreationTime();
+		this.remark = im.getRemark();
 	}
 
 	public IMHistoryEntity() {

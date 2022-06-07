@@ -14,11 +14,14 @@ import onb.com.scf.constant.StatusConstant;
 import onb.com.scf.dto.IMActivateRequest;
 import onb.com.scf.dto.IMDeactivateReq;
 import onb.com.scf.dto.IMDetailsResponseDto;
+import onb.com.scf.dto.IMForApproveResponse;
 import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.entity.IMEntity;
 import onb.com.scf.entity.IMHistoryEntity;
+import onb.com.scf.entity.IMPreauthEntity;
 import onb.com.scf.entity.UserEntity;
 import onb.com.scf.repository.IMHistoryRepository;
+import onb.com.scf.repository.IMPreauthRepository;
 import onb.com.scf.repository.IMRepository;
 import onb.com.scf.service.IMService;
 
@@ -37,6 +40,9 @@ public class IMServiceImpl implements IMService {
 
 	@Autowired
 	UserEntityService userEntityService;
+
+	@Autowired
+	IMPreauthRepository imPreauthRepository;
 
 	/**
 	 * Getting all im record by using the method findaAll()
@@ -116,11 +122,15 @@ public class IMServiceImpl implements IMService {
 				}
 				im.setCreationTime(Date.valueOf(LocalDate.now()));
 				im.setStatus(StatusConstant.IM_PENDING_STATUS);
+
+				IMPreauthEntity imPreAuth = new IMPreauthEntity(im);
+				log.info("inserted in PREAUTH_MASTER");
+				imPreauthRepository.save(imPreAuth);
+				log.info("inserted in IM_MASTER");
 				imRepository.save(im);
 				// Im details added to onb_im_master_history
 				IMHistoryEntity iHis = new IMHistoryEntity(im);
-				iHis.setCreationTime(Date.valueOf(LocalDate.now()));
-				iHis.setStatus(StatusConstant.IM_PENDING_STATUS);
+				log.info("inserted in IM_MASTER_HISTORY");
 				imHistoryRepository.save(iHis);
 
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
@@ -195,7 +205,7 @@ public class IMServiceImpl implements IMService {
 			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 			responseDto.setMsg(StatusConstant.STATUS_IM_UPDATED_SUCCESSFULLY);
 		} catch (Exception e) {
-			log.error("Exception Occurred" + e.getMessage());
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -214,7 +224,7 @@ public class IMServiceImpl implements IMService {
 			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 			responseDto.setMsg(StatusConstant.STATUS_IM_ACTIVATED_SUCCESSFULLY + imCode);
 		} catch (Exception e) {
-			log.error("Exception Occurred" + e.getMessage());
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -225,9 +235,65 @@ public class IMServiceImpl implements IMService {
 		try {
 			// here we will call sms service and eamil service for validate the same
 		} catch (Exception e) {
-			log.error("Exception Occurred" + e.getMessage());
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
+	}
+
+	public IMForApproveResponse getAllUnAuthorisedIM() {
+		IMForApproveResponse responseDto = new IMForApproveResponse();
+		try {
+			List<IMPreauthEntity> impreAuthList = imPreauthRepository.getAllUnAuthorisedIM();
+			if (!impreAuthList.isEmpty()) {
+				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_PREAUTH_IM_RETRIVED_SUCESSFULLY);
+				responseDto.setListOfPreAuthIM(impreAuthList);
+			} else {
+				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				responseDto.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE_FOR_APPROVE_IM);
+			}
+		} catch (Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
+	}
+
+	public ResponseDto authoriseIM(List<IMEntity> approvedIMList) {
+		ResponseDto responseDto = new ResponseDto();
+		try {
+			if(approvedIMList!= null && !approvedIMList.isEmpty()) {
+				approvedIMList.forEach(this::performAuthoriseAction);
+				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_PREAUTH_IM_AUTHORISED_SUCESSFULLY);
+			}else {
+				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				responseDto.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
+			}
+		} catch (Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
+	}
+	public void performAuthoriseAction(IMEntity im) {
+		try {
+			log.info("authorization started for im_master");
+			imPreauthRepository.deletePreAuthIM(im.getImCode());
+			imRepository.authoriseIM(im.getImCode(), im.getStatus(), im.getRemark(), im.getAuthorizedBy(),
+					Date.valueOf(LocalDate.now()));
+			log.info("authorization started for im_history");
+			imHistoryRepository.authoriseIM(im.getImCode(), im.getStatus(), im.getRemark(), im.getAuthorizedBy(),
+					Date.valueOf(LocalDate.now()));
+		}catch(Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+		}
 	}
 }

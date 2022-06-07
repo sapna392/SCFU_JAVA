@@ -164,5 +164,7 @@ public class VendorEntity {
 	private String fax;
 	@Column
 	private String h2hopted;
+	@Column
+	private String remark;
 
 }

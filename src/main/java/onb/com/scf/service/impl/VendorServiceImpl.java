@@ -15,9 +15,15 @@ import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.dto.VendoActivateRequest;
 import onb.com.scf.dto.VendorDeactivateRequest;
 import onb.com.scf.dto.VendorDetailsResponseDto;
+import onb.com.scf.dto.VendorPreAuthResponse;
+import onb.com.scf.entity.PreauthVendorEntity;
 import onb.com.scf.entity.UserEntity;
 import onb.com.scf.entity.VendorEntity;
+import onb.com.scf.entity.VendorHistoryEntity;
+import onb.com.scf.entity.VendorPreAuthEntity;
 import onb.com.scf.repository.IMRepository;
+import onb.com.scf.repository.PreauthVendorRepository;
+import onb.com.scf.repository.VendorHistoryRepository;
 import onb.com.scf.repository.VendorRepository;
 import onb.com.scf.service.VendorService;
 
@@ -34,6 +40,10 @@ public class VendorServiceImpl implements VendorService {
 	UserEntityService userEntityService;
 	@Autowired
 	IMRepository imRepository;
+	@Autowired
+	PreauthVendorRepository preauthVendorRepository;
+	@Autowired
+	VendorHistoryRepository vendorHistoryRepository;
 
 	/**
 	 * Getting all vendor record by using the method findaAll()
@@ -114,7 +124,15 @@ public class VendorServiceImpl implements VendorService {
 				}
 				vendor.setCreationTime(Date.valueOf(LocalDate.now()));
 				vendor.setStatus(StatusConstant.VENDOR_PENDING_STATUS);
+				
+				PreauthVendorEntity  preauthVendor = new PreauthVendorEntity(vendor);
+				log.info("preauth vendor saved");
+				preauthVendorRepository.save(preauthVendor);	
+				log.info("Vendor saved in master ");
 				vendorRepository.save(vendor);
+				VendorHistoryEntity vendorHistory = new VendorHistoryEntity(vendor);
+				log.info("Vendor saved in history ");
+				vendorHistoryRepository.save(vendorHistory);
 				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY);
@@ -214,6 +232,26 @@ public class VendorServiceImpl implements VendorService {
 			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 			responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 			responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ACTIVATED_SUCESSFULLY + vendorCode);
+		} catch (Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
+	}
+	public VendorPreAuthResponse getAllUnAuthorisedVendor() {
+		VendorPreAuthResponse responseDto = new VendorPreAuthResponse();
+		try {
+			List<VendorPreAuthEntity> vendorreAuthList = preauthVendorRepository.getAllUnAuthorisedVendor();
+			if (!vendorreAuthList.isEmpty()) {
+				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_PREAUTH_VENDOR_RETRIVED_SUCESSFULLY);
+				responseDto.setListOfPreAuthVendor(vendorreAuthList);
+			} else {
+				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				responseDto.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE_FOR_APPROVE_IM);
+			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
 			responseDto.setMsg(e.getMessage());

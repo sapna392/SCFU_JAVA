@@ -233,5 +233,7 @@ public class IMEntity {
 	private String noOfDaysFrom;
 	@Column
 	private String noOfDaysTo;
+	@Column
+	private String remark;
 
 }

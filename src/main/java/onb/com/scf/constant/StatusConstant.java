@@ -28,10 +28,16 @@ public class StatusConstant {
 	public static final String STATUS_DESCRIPTION_VENDOR_RETRIVED_SUCESSFULLY = "Vendor Details Retrived successfully !";
 	public static final String STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY = "Vendor Added successfully !";
 	public static final String STATUS_IM_CODE_NOT_FOUND = "IM Code Not Found !";
-	public static final String IM_PENDING_STATUS = "Authorization Pending";
+	public static final String IM_PENDING_STATUS = "Pending";
 	public static final String IM_AUTHORISED_STATUS = "Authorised";
 	public static final String VENDOR_PENDING_STATUS = "Authorization Pending";
 	public static final String VENDOR_AUTHORISED_STATUS = "Authorised";
 	public static final String STATUS_DESCRIPTION_VENDOR_ACTIVATED_SUCESSFULLY = "Vendor Activated successfully for  !";
+	
+	public static final String STATUS_DESCRIPTION_PREAUTH_IM_RETRIVED_SUCESSFULLY = "Preauth IM retreived successfully !";
+	public static final String STATUS_DESCRIPTION_PREAUTH_IM_AUTHORISED_SUCESSFULLY = "IM Authorised successfully !";
+	public static final String STATUS_DATA_NOT_AVAILAIBLE_FOR_APPROVE_IM = "Data Not Availaible for approve!";
+	
+	public static final String STATUS_DESCRIPTION_PREAUTH_VENDOR_RETRIVED_SUCESSFULLY = "Preauth Vendor retreived successfully !";
 
 }

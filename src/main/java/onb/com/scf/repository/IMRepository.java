@@ -38,4 +38,9 @@ public interface IMRepository extends JpaRepository<IMEntity, String> {
 	@Query(nativeQuery = true,value ="Update onb_im_master SET is_im_inactive=:isImInactive,last_mod_time=:lastModificationTime WHERE im_code=:imCode")
 	public void activateIm(@Param("imCode") String imCode, @Param("isImInactive") Boolean isImInactive,
 			Date lastModificationTime);
+	
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "update onb_im_master set status=:status,remark=:remark,authorized_by =:authorisedBy ,authorized_date=:authorisedDate where im_code=:imCode")
+	public void authoriseIM(String imCode,String status,String remark,String authorisedBy,Date authorisedDate);
 }

@@ -1,5 +1,7 @@
 package onb.com.scf.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import onb.com.scf.dto.IMActivateRequest;
 import onb.com.scf.dto.IMDeactivateReq;
 import onb.com.scf.dto.IMDetailsResponseDto;
+import onb.com.scf.dto.IMForApproveResponse;
 import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.entity.IMEntity;
 import onb.com.scf.repository.IMRepository;
@@ -120,5 +123,17 @@ public class IMController {
 	public ResponseEntity<ResponseDto> activateIM(@RequestBody IMActivateRequest request) {
 		ResponseDto responseDto = imService.activeIM(request);
 		return new ResponseEntity<>(responseDto, HttpStatus.OK);
+	}
+
+	@GetMapping("/im/getAllUnAuthorisedIM")
+	public ResponseEntity<IMForApproveResponse> getAllUnAuthorisedIM() {
+		IMForApproveResponse response = imService.getAllUnAuthorisedIM();
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@PostMapping("/im/authoriseIM")
+	public ResponseEntity<ResponseDto> authoriseIM(@RequestBody List<IMEntity> approvedIMList) {
+		ResponseDto response = imService.authoriseIM(approvedIMList);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
