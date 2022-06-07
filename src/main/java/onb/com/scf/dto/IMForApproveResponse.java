@@ -10,5 +10,5 @@ public class IMForApproveResponse {
 	private String status;
 	private String statusCode;
 	private String msg;
-	List<IMPreauthEntity> listOfPreAuthIM;
+	List<IMPreauthEntity> data;
 }

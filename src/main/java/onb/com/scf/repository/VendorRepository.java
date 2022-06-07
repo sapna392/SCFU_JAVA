@@ -36,4 +36,9 @@ public interface VendorRepository extends CrudRepository<VendorEntity, Long> {
 	@Modifying
 	@Query(nativeQuery = true,value ="Update onb_vendor_master SET is_vendor_inactive=:activateFlag,last_mod_time=:lastModTime WHERE vendor_code=:vendorCode")
 	public void actvateVendor(String vendorCode, boolean activateFlag, Date lastModTime);
+	
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "update onb_vendor_master set status=:status,remark=:remark,authorized_by =:authorisedBy ,authorized_date=:authorisedDate where vendor_code=:vendorCode")
+	public void authoriseVendor(String vendorCode,String status,String remark,String authorisedBy,Date authorisedDate);
 }

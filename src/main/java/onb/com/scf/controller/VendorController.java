@@ -1,5 +1,7 @@
 package onb.com.scf.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.dto.VendoActivateRequest;
 import onb.com.scf.dto.VendorDeactivateRequest;
 import onb.com.scf.dto.VendorDetailsResponseDto;
+import onb.com.scf.dto.VendorPreAuthResponse;
 import onb.com.scf.entity.VendorEntity;
 import onb.com.scf.service.VendorService;
 
@@ -126,4 +129,16 @@ public class VendorController {
 	 * vendor) { vendor.setIsVendorInactive(true);
 	 * vendorService.saveOrUpdate(vendor); return vendor; }
 	 */
+	
+	@GetMapping("/vendor/getAllUnAuthorisedVendor")
+	public ResponseEntity<VendorPreAuthResponse> getAllUnAuthorisedVendor() {
+		VendorPreAuthResponse response = vendorService.getAllUnAuthorisedVendor();
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@PostMapping("/vendor/authoriseVendor")
+	public ResponseEntity<ResponseDto> authoriseIM(@RequestBody List<VendorEntity> approvedVendorList) {
+		ResponseDto response = vendorService.authoriseVendor(approvedVendorList);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }

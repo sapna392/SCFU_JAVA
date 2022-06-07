@@ -2,23 +2,25 @@ package onb.com.scf.entity;
 
 
 
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import lombok.Data;
+
 
 @Entity
 @Data
-@Table(name = "ONB_PREAUTH_VENDOR")
+@Table(name = "ONB_PREAUTH_VENDOR_MASTER")
 public class VendorPreAuthEntity {
+
 	@Column
 	@Id
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long vendorHistoryId;
+	private Long vendorSeqCode;
 
 	@Column
 	private String vendorCode;
@@ -164,8 +166,9 @@ public class VendorPreAuthEntity {
 	private String h2hopted;
 	@Column
 	private String remark;
-
+	
 	public VendorPreAuthEntity(VendorEntity vendor) {
+		this.vendorSeqCode = vendor.getVendorSeqCode();
 		this.vendorCode = vendor.getVendorCode();
 		this.imCode = vendor.getImCode();
 		this.businessGroup = vendor.getBusinessGroup();
@@ -239,4 +242,8 @@ public class VendorPreAuthEntity {
 		this.h2hopted = vendor.getH2hopted();
 		this.remark = vendor.getRemark();
 	}
+	public VendorPreAuthEntity() {
+		super();
+	}
+
 }

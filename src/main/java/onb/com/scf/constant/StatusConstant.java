@@ -6,7 +6,8 @@ public class StatusConstant {
 	}
 
 	public static final String STATUS_SUCCESS_CODE = "200";
-	public static final String STATUS_FAILURE_CODE = "404";
+	public static final String STATUS_FAILURE_CODE = "500";
+	public static final String STATUS_DATA_NOT_FOUND_CODE = "404";
 	public static final String STATUS_SUCCESS = "Success";
 	public static final String STATUS_FAILURE = "Failure";
 	public static final String STATUS_DESCRIPTION_IM_LIST_RETRIVED_SUCESSFULLY = "List of IM retreived successfully !";
@@ -30,14 +31,16 @@ public class StatusConstant {
 	public static final String STATUS_IM_CODE_NOT_FOUND = "IM Code Not Found !";
 	public static final String IM_PENDING_STATUS = "Pending";
 	public static final String IM_AUTHORISED_STATUS = "Authorised";
-	public static final String VENDOR_PENDING_STATUS = "Authorization Pending";
+	public static final String VENDOR_PENDING_STATUS = "Pending";
 	public static final String VENDOR_AUTHORISED_STATUS = "Authorised";
 	public static final String STATUS_DESCRIPTION_VENDOR_ACTIVATED_SUCESSFULLY = "Vendor Activated successfully for  !";
-	
+
 	public static final String STATUS_DESCRIPTION_PREAUTH_IM_RETRIVED_SUCESSFULLY = "Preauth IM retreived successfully !";
 	public static final String STATUS_DESCRIPTION_PREAUTH_IM_AUTHORISED_SUCESSFULLY = "IM Authorised successfully !";
 	public static final String STATUS_DATA_NOT_AVAILAIBLE_FOR_APPROVE_IM = "Data Not Availaible for approve!";
-	
+
 	public static final String STATUS_DESCRIPTION_PREAUTH_VENDOR_RETRIVED_SUCESSFULLY = "Preauth Vendor retreived successfully !";
+
+	public static final String STATUS_DESCRIPTION_PREAUTH_VENDOR_AUTHORISED_SUCESSFULLY = "Vendor Authorised successfully !";
 
 }

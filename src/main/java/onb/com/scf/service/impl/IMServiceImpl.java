@@ -58,14 +58,16 @@ public class IMServiceImpl implements IMService {
 				response.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				response.setStatus(StatusConstant.STATUS_SUCCESS);
 				response.setMsg(StatusConstant.STATUS_DESCRIPTION_IM_LIST_RETRIVED_SUCESSFULLY);
-				response.setListOfIM(im);
+				response.setData(im);
 			} else {
-				response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			response.setStatus(StatusConstant.STATUS_FAILURE);
 			response.setMsg(e.getMessage());
 		}
 		return response;
@@ -85,14 +87,16 @@ public class IMServiceImpl implements IMService {
 				response.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				response.setStatus(StatusConstant.STATUS_SUCCESS);
 				response.setMsg(StatusConstant.STATUS_DESCRIPTION_IM_RETRIVED_SUCESSFULLY);
-				response.setListOfIM(im);
+				response.setData(im);
 			} else {
-				response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			response.setStatus(StatusConstant.STATUS_FAILURE);
 			response.setMsg(e.getMessage());
 		}
 		return response;
@@ -143,6 +147,8 @@ public class IMServiceImpl implements IMService {
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -163,6 +169,8 @@ public class IMServiceImpl implements IMService {
 			responseDto.setMsg(StatusConstant.STATUS_IM_DELETED_SUCCESSFULLY + imCode);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -183,6 +191,8 @@ public class IMServiceImpl implements IMService {
 			responseDto.setMsg(StatusConstant.STATUS_IM_DEACTIVATED_SUCCESSFULLY + imCode);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -199,13 +209,24 @@ public class IMServiceImpl implements IMService {
 			}
 			List<IMEntity> im2 = imRepository.findByImCode(im.getImCode());
 			im.setImId(im2.get(0).getImId());
+			log.info("updated in PREAUTH_MASTER");
+			IMPreauthEntity imPreAuth = new IMPreauthEntity(im);
+			imPreauthRepository.save(imPreAuth);
+			log.info("updated in IM_MASTER");
 			imRepository.save(im);
+			// Im details added to onb_im_master_history
+			IMHistoryEntity iHis = new IMHistoryEntity(im);
+			log.info("updated in IM_MASTER_HISTORY");
+			imHistoryRepository.save(iHis);
 			log.info(StatusConstant.STATUS_IM_UPDATED_SUCCESSFULLY);
+			
 			responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 			responseDto.setMsg(StatusConstant.STATUS_IM_UPDATED_SUCCESSFULLY);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -225,6 +246,8 @@ public class IMServiceImpl implements IMService {
 			responseDto.setMsg(StatusConstant.STATUS_IM_ACTIVATED_SUCCESSFULLY + imCode);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -249,14 +272,16 @@ public class IMServiceImpl implements IMService {
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_PREAUTH_IM_RETRIVED_SUCESSFULLY);
-				responseDto.setListOfPreAuthIM(impreAuthList);
+				responseDto.setData(impreAuthList);
 			} else {
-				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				responseDto.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 				responseDto.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE_FOR_APPROVE_IM);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -265,13 +290,13 @@ public class IMServiceImpl implements IMService {
 	public ResponseDto authoriseIM(List<IMEntity> approvedIMList) {
 		ResponseDto responseDto = new ResponseDto();
 		try {
-			if(approvedIMList!= null && !approvedIMList.isEmpty()) {
+			if (approvedIMList != null && !approvedIMList.isEmpty()) {
 				approvedIMList.forEach(this::performAuthoriseAction);
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_PREAUTH_IM_AUTHORISED_SUCESSFULLY);
-			}else {
-				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			} else {
+				responseDto.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 				responseDto.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
 			}
@@ -283,6 +308,7 @@ public class IMServiceImpl implements IMService {
 		}
 		return responseDto;
 	}
+
 	public void performAuthoriseAction(IMEntity im) {
 		try {
 			log.info("authorization started for im_master");
@@ -292,7 +318,7 @@ public class IMServiceImpl implements IMService {
 			log.info("authorization started for im_history");
 			imHistoryRepository.authoriseIM(im.getImCode(), im.getStatus(), im.getRemark(), im.getAuthorizedBy(),
 					Date.valueOf(LocalDate.now()));
-		}catch(Exception e) {
+		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
 		}
 	}

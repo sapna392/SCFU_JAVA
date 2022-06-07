@@ -15,7 +15,7 @@ import lombok.Data;
 public class VendorHistoryEntity {
 	@Column
 	@Id
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long vendorHistoryId;
 
 	@Column
@@ -164,6 +164,7 @@ public class VendorHistoryEntity {
 	private String remark;
 
 	public VendorHistoryEntity(VendorEntity vendor) {
+		this.vendorHistoryId = vendor.getVendorSeqCode();
 		this.vendorCode = vendor.getVendorCode();
 		this.imCode = vendor.getImCode();
 		this.businessGroup = vendor.getBusinessGroup();
@@ -236,5 +237,8 @@ public class VendorHistoryEntity {
 		this.fax = vendor.getFax();
 		this.h2hopted = vendor.getH2hopted();
 		this.remark = vendor.getRemark();
+	}
+	public VendorHistoryEntity() {
+		super();
 	}
 }

@@ -16,14 +16,13 @@ import onb.com.scf.dto.VendoActivateRequest;
 import onb.com.scf.dto.VendorDeactivateRequest;
 import onb.com.scf.dto.VendorDetailsResponseDto;
 import onb.com.scf.dto.VendorPreAuthResponse;
-import onb.com.scf.entity.PreauthVendorEntity;
 import onb.com.scf.entity.UserEntity;
 import onb.com.scf.entity.VendorEntity;
 import onb.com.scf.entity.VendorHistoryEntity;
 import onb.com.scf.entity.VendorPreAuthEntity;
 import onb.com.scf.repository.IMRepository;
-import onb.com.scf.repository.PreauthVendorRepository;
 import onb.com.scf.repository.VendorHistoryRepository;
+import onb.com.scf.repository.VendorPreAuthRepository;
 import onb.com.scf.repository.VendorRepository;
 import onb.com.scf.service.VendorService;
 
@@ -41,7 +40,7 @@ public class VendorServiceImpl implements VendorService {
 	@Autowired
 	IMRepository imRepository;
 	@Autowired
-	PreauthVendorRepository preauthVendorRepository;
+	VendorPreAuthRepository vendorPreAuthRepository;
 	@Autowired
 	VendorHistoryRepository vendorHistoryRepository;
 
@@ -59,14 +58,16 @@ public class VendorServiceImpl implements VendorService {
 				response.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				response.setStatus(StatusConstant.STATUS_SUCCESS);
 				response.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_LIST_RETRIVED_SUCESSFULLY);
-				response.setListOfVendor(vendor);
+				response.setData(vendor);
 			} else {
-				response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			response.setStatus(StatusConstant.STATUS_FAILURE);
 			response.setMsg(e.getMessage());
 		}
 		return response;
@@ -86,14 +87,16 @@ public class VendorServiceImpl implements VendorService {
 				response.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				response.setStatus(StatusConstant.STATUS_SUCCESS);
 				response.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_RETRIVED_SUCESSFULLY + id);
-				response.setListOfVendor(vendorList);
+				response.setData(vendorList);
 			} else {
-				response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			response.setStatus(StatusConstant.STATUS_FAILURE);
 			response.setMsg(e.getMessage());
 		}
 		return response;
@@ -124,25 +127,27 @@ public class VendorServiceImpl implements VendorService {
 				}
 				vendor.setCreationTime(Date.valueOf(LocalDate.now()));
 				vendor.setStatus(StatusConstant.VENDOR_PENDING_STATUS);
-				
-				PreauthVendorEntity  preauthVendor = new PreauthVendorEntity(vendor);
+
+				VendorPreAuthEntity preauthVendor = new VendorPreAuthEntity(vendor);
 				log.info("preauth vendor saved");
-				//preauthVendorRepository.save(preauthVendor);	
+				vendorPreAuthRepository.save(preauthVendor);
 				log.info("Vendor saved in master ");
 				vendorRepository.save(vendor);
 				VendorHistoryEntity vendorHistory = new VendorHistoryEntity(vendor);
 				log.info("Vendor saved in history");
-				//vendorHistoryRepository.save(vendorHistory);
+				vendorHistoryRepository.save(vendorHistory);
 				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY);
 			} else {
 				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
-				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				responseDto.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				responseDto.setMsg(StatusConstant.STATUS_PREFIX_NOT_AVAILAIBLE);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -163,6 +168,8 @@ public class VendorServiceImpl implements VendorService {
 			responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_DELETED_SUCESSFULLY + vendorId);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -174,6 +181,12 @@ public class VendorServiceImpl implements VendorService {
 		try {
 			vendor.setLastModTime(Date.valueOf(LocalDate.now()));
 			vendorRepository.save(vendor);
+			VendorPreAuthEntity preauthVendor = new VendorPreAuthEntity(vendor);
+			log.info("preauth vendor updated");
+			vendorPreAuthRepository.save(preauthVendor);
+			VendorHistoryEntity vendorHistory = new VendorHistoryEntity(vendor);
+			log.info("Vendor saved in history");
+			vendorHistoryRepository.save(vendorHistory);
 			log.info(StatusConstant.STATUS_DESCRIPTION_VENDOR_UPDATED_SUCESSFULLY);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
@@ -194,6 +207,8 @@ public class VendorServiceImpl implements VendorService {
 			responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_DEACTIVATED_SUCESSFULLY + vendorCode);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
@@ -208,14 +223,16 @@ public class VendorServiceImpl implements VendorService {
 				response.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				response.setStatus(StatusConstant.STATUS_SUCCESS);
 				response.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_LIST_RETRIVED_SUCESSFULLY);
-				response.setListOfVendor(vendor);
+				response.setData(vendor);
 			} else {
-				response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			response.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			response.setStatus(StatusConstant.STATUS_FAILURE);
 			response.setMsg(e.getMessage());
 		}
 		return response;
@@ -234,28 +251,69 @@ public class VendorServiceImpl implements VendorService {
 			responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ACTIVATED_SUCESSFULLY + vendorCode);
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
 	}
+
 	public VendorPreAuthResponse getAllUnAuthorisedVendor() {
 		VendorPreAuthResponse responseDto = new VendorPreAuthResponse();
 		try {
-			List<VendorPreAuthEntity> vendorreAuthList = preauthVendorRepository.getAllUnAuthorisedVendor();
+			List<VendorPreAuthEntity> vendorreAuthList = vendorPreAuthRepository.getAllUnAuthorisedVednor();
 			if (!vendorreAuthList.isEmpty()) {
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_PREAUTH_VENDOR_RETRIVED_SUCESSFULLY);
-				responseDto.setListOfPreAuthVendor(vendorreAuthList);
+				responseDto.setData(vendorreAuthList);
 			} else {
-				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				responseDto.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 				responseDto.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE_FOR_APPROVE_IM);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 			responseDto.setMsg(e.getMessage());
 		}
 		return responseDto;
+	}
+
+	public ResponseDto authoriseVendor(List<VendorEntity> approvedVendorList) {
+		ResponseDto responseDto = new ResponseDto();
+		try {
+			if (approvedVendorList != null && !approvedVendorList.isEmpty()) {
+				approvedVendorList.forEach(this::performAuthoriseAction);
+				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_PREAUTH_VENDOR_AUTHORISED_SUCESSFULLY);
+			} else {
+				responseDto.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				responseDto.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
+			}
+		} catch (Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
+	}
+
+	public void performAuthoriseAction(VendorEntity vendor) {
+		try {
+			log.info("authorization started for im_master");
+			vendorPreAuthRepository.deletePreAuthVendor(vendor.getVendorCode());
+			vendorRepository.authoriseVendor(vendor.getVendorCode(), vendor.getStatus(), vendor.getRemark(),
+					vendor.getAuthorizedBy(), Date.valueOf(LocalDate.now()));
+			log.info("authorization started for im_history");
+			vendorHistoryRepository.authoriseVendor(vendor.getVendorCode(), vendor.getStatus(), vendor.getRemark(),
+					vendor.getAuthorizedBy(), Date.valueOf(LocalDate.now()));
+		} catch (Exception e) {
+			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+		}
 	}
 }

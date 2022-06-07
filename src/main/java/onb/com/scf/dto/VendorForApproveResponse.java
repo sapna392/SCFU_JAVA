@@ -3,12 +3,12 @@ package onb.com.scf.dto;
 import java.util.List;
 
 import lombok.Data;
-import onb.com.scf.entity.VendorPreAuthEntity;
+import onb.com.scf.entity.VendorEntity;
 
 @Data
-public class VendorPreAuthResponse {
+public class VendorForApproveResponse {
 	private String status;
 	private String statusCode;
 	private String msg;
-	List<VendorPreAuthEntity> data;
+	List<VendorEntity> data;
 }

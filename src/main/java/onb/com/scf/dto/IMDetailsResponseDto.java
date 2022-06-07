@@ -13,6 +13,6 @@ public class IMDetailsResponseDto {
 	private String status;
 	 private String statusCode;
 	 private String msg;
-	 List<IMEntity>listOfIM;
+	 List<IMEntity> data;
 
 }
