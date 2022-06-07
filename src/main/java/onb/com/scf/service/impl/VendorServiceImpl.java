@@ -127,12 +127,12 @@ public class VendorServiceImpl implements VendorService {
 				
 				PreauthVendorEntity  preauthVendor = new PreauthVendorEntity(vendor);
 				log.info("preauth vendor saved");
-				preauthVendorRepository.save(preauthVendor);	
+				//preauthVendorRepository.save(preauthVendor);	
 				log.info("Vendor saved in master ");
 				vendorRepository.save(vendor);
 				VendorHistoryEntity vendorHistory = new VendorHistoryEntity(vendor);
-				log.info("Vendor saved in history ");
-				vendorHistoryRepository.save(vendorHistory);
+				log.info("Vendor saved in history");
+				//vendorHistoryRepository.save(vendorHistory);
 				responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
 				responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 				responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY);
