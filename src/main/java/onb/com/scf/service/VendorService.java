@@ -26,7 +26,7 @@ public interface VendorService {
 
 	ResponseDto addVendor(VendorEntity vendor);
 
-	void update(VendorEntity vendor);
+	ResponseDto update(VendorEntity vendor);
 
 	ResponseDto deActivate(VendorDeactivateRequest request);
 

@@ -20,7 +20,7 @@ public class VendorPreAuthEntity {
 	@Column
 	@Id
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long vendorSeqCode;
+	private Long preAuthvendorId;
 
 	@Column
 	private String vendorCode;
@@ -168,7 +168,7 @@ public class VendorPreAuthEntity {
 	private String remark;
 	
 	public VendorPreAuthEntity(VendorEntity vendor) {
-		this.vendorSeqCode = vendor.getVendorSeqCode();
+		this.preAuthvendorId = vendor.getVendorSeqCode();
 		this.vendorCode = vendor.getVendorCode();
 		this.imCode = vendor.getImCode();
 		this.businessGroup = vendor.getBusinessGroup();

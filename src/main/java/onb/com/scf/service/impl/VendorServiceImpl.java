@@ -175,8 +175,8 @@ public class VendorServiceImpl implements VendorService {
 		return responseDto;
 	}
 
-	@Override
-	public void update(VendorEntity vendor) {
+	public ResponseDto update(VendorEntity vendor) {
+		ResponseDto responseDto = new ResponseDto();
 		log.info("update vendor details  ");
 		try {
 			vendor.setLastModTime(Date.valueOf(LocalDate.now()));
@@ -188,9 +188,16 @@ public class VendorServiceImpl implements VendorService {
 			log.info("Vendor saved in history");
 			vendorHistoryRepository.save(vendorHistory);
 			log.info(StatusConstant.STATUS_DESCRIPTION_VENDOR_UPDATED_SUCESSFULLY);
+			responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+			responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+			responseDto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_UPDATED_SUCESSFULLY + vendor.getVendorCode());
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+			responseDto.setMsg(e.getMessage());
 		}
+		return responseDto;
 	}
 
 	@Override

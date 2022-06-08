@@ -88,9 +88,9 @@ public class VendorController {
 	 * @return vendor
 	 */
 	@PutMapping("/updateVendor")
-	public VendorEntity update(@RequestBody VendorEntity vendor) {
-		vendorService.update(vendor);
-		return vendor;
+	public ResponseEntity<ResponseDto> update(@RequestBody VendorEntity vendor) {
+		ResponseDto response =vendorService.update(vendor);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
