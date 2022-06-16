@@ -124,12 +124,13 @@ public class VendorServiceImpl implements VendorService {
 		boolean isPanAlreadyExistWithIM = false;
 		try {
 			if (userEntityData.isPresent()) {
-				if (vendor.getVendorPan() == null || vendor.getVendorPan().isEmpty()) {
-					responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
-					responseDto.setStatus(StatusConstant.STATUS_FAILURE);
-					responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
-					return responseDto;
-				}
+				/*
+				 * if (vendor.getVendorPan() == null || vendor.getVendorPan().isEmpty()) {
+				 * responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				 * responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				 * responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND); return
+				 * responseDto; }
+				 */
 				/*
 				 * isPanAlreadyExistWithIM = checkPanAlreadyExistForAdd(vendor.getVendorPan());
 				 * if (isPanAlreadyExistWithIM) {
@@ -200,12 +201,13 @@ public class VendorServiceImpl implements VendorService {
 				responseDto.setMsg(StatusConstant.STATUS_VENDOR_CODE_NOT_FOUND);
 				return responseDto;
 			}
-			if (vendor.getVendorPan() == null || vendor.getVendorPan().isEmpty()) {
-				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
-				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
-				responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
-				return responseDto;
-			}
+			/*
+			 * if (vendor.getVendorPan() == null || vendor.getVendorPan().isEmpty()) {
+			 * responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			 * responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+			 * responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND); return
+			 * responseDto; }
+			 */
 			/*
 			 * isPanAlreadyExistWithIM =
 			 * checkPanAlreadyExistForUpdate(vendor.getVendorPan(), vendor.getVendorCode());

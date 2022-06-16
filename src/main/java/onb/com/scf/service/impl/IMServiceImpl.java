@@ -122,12 +122,12 @@ public class IMServiceImpl implements IMService {
 		boolean isPanAlreadyExistWithIM = false;
 		try {
 			if (userEntityData.isPresent()) {
-				if (im.getImPan() == null || im.getImPan().isEmpty()) {
-					responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
-					responseDto.setStatus(StatusConstant.STATUS_FAILURE);
-					responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
-					return responseDto;
-				}
+//				if (im.getImPan() == null || im.getImPan().isEmpty()) {
+//					responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+//					responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+//					responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
+//					return responseDto;
+//				}
 				/*
 				 * isPanAlreadyExistWithIM = checkPanAlreadyExistForAdd(im.getImPan()); if
 				 * (isPanAlreadyExistWithIM) {
@@ -197,12 +197,12 @@ public class IMServiceImpl implements IMService {
 				responseDto.setMsg(StatusConstant.STATUS_IM_CODE_NOT_FOUND);
 				return responseDto;
 			}
-			if (im.getImPan() == null || im.getImPan().isEmpty()) {
-				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
-				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
-				responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
-				return responseDto;
-			}
+//			if (im.getImPan() == null || im.getImPan().isEmpty()) {
+//				responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+//				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+//				responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
+//				return responseDto;
+//			}
 			/*
 			 * isPanAlreadyExistWithIM = checkPanAlreadyExistForUpdate(im.getImPan(),
 			 * im.getImCode());
