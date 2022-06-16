@@ -70,6 +70,7 @@ public class IMServiceImpl implements IMService {
 				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
+				response.setData(im);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
@@ -127,13 +128,14 @@ public class IMServiceImpl implements IMService {
 					responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
 					return responseDto;
 				}
-				isPanAlreadyExistWithIM = checkPanAlreadyExistForAdd(im.getImPan());
-				if (isPanAlreadyExistWithIM) {
-					responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
-					responseDto.setStatus(StatusConstant.STATUS_FAILURE);
-					responseDto.setMsg(StatusConstant.PAN_CARD_ALREADY_MAPPED);
-					return responseDto;
-				}
+				/*
+				 * isPanAlreadyExistWithIM = checkPanAlreadyExistForAdd(im.getImPan()); if
+				 * (isPanAlreadyExistWithIM) {
+				 * responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				 * responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				 * responseDto.setMsg(StatusConstant.PAN_CARD_ALREADY_MAPPED); return
+				 * responseDto; }
+				 */
 				prefix = userEntityData.get().getPrefix();
 				log.info("add IM started ");
 				Long maxId = imRepository.getTopId();

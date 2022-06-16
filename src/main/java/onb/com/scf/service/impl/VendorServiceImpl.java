@@ -64,6 +64,7 @@ public class VendorServiceImpl implements VendorService {
 				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
+				response.setData(vendor);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
@@ -129,13 +130,14 @@ public class VendorServiceImpl implements VendorService {
 					responseDto.setMsg(StatusConstant.STATUS_PAN_NUMBER_NOT_FOUND);
 					return responseDto;
 				}
-				isPanAlreadyExistWithIM = checkPanAlreadyExistForAdd(vendor.getVendorPan());
-				if (isPanAlreadyExistWithIM) {
-					responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
-					responseDto.setStatus(StatusConstant.STATUS_FAILURE);
-					responseDto.setMsg(StatusConstant.PAN_CARD_ALREADY_MAPPED);
-					return responseDto;
-				}
+				/*
+				 * isPanAlreadyExistWithIM = checkPanAlreadyExistForAdd(vendor.getVendorPan());
+				 * if (isPanAlreadyExistWithIM) {
+				 * responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+				 * responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				 * responseDto.setMsg(StatusConstant.PAN_CARD_ALREADY_MAPPED); return
+				 * responseDto; }
+				 */
 				prefix = userEntityData.get().getPrefix();
 				log.info("add Vendor started ");
 				Long maxId = vendorRepository.getTopId();
