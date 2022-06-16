@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import onb.com.scf.dto.IMActivateRequest;
+import onb.com.scf.dto.IMAndVendorResponse;
 import onb.com.scf.dto.IMDeactivateReq;
 import onb.com.scf.dto.IMDetailsResponseDto;
 import onb.com.scf.dto.IMForApproveResponse;
@@ -65,52 +66,15 @@ public class IMController {
 		IMDetailsResponseDto response = imService.getIMByCode(imCode);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-
-	/**
-	 * This api deletes the detail of a specific im based on
-	 * 
-	 * @param imId
-	 * @return success or failure response
-	 */
-	@DeleteMapping("/im/deleteImById/{imid}")
-	public ResponseEntity<ResponseDto> deleteIM(@PathVariable("imid") String imCode) {
-		ResponseDto response = imService.delete(imCode);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-
 	/**
 	 * This api creates all the im detail in the database
 	 * 
 	 * @return imCode
 	 */
-	@PostMapping("/im/addIm")
-	public ResponseEntity<ResponseDto> saveIM(@RequestBody IMEntity im) {
-		ResponseDto response = imService.addIm(im);
+	@PostMapping("/im/addImByMaker")
+	public ResponseEntity<ResponseDto> addImByMaker(@RequestBody IMEntity im) {
+		ResponseDto response = imService.addImByMaker(im);
 		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-
-	/**
-	 * This api updates the im detail in the database
-	 * 
-	 * @param im
-	 * @return im
-	 */
-	@PutMapping("/im/updateIm")
-	public ResponseEntity<ResponseDto> update(@RequestBody IMEntity im) {
-		ResponseDto response = imService.updateIm(im);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-
-	/**
-	 * This api deactivates the im detail in the database
-	 * 
-	 * @param im
-	 * @return im
-	 */
-	@PutMapping("/im/deactivate")
-	public ResponseEntity<ResponseDto> deActivate(@RequestBody IMDeactivateReq request) {
-		ResponseDto responseDto = imService.isImInactive(request);
-		return new ResponseEntity<>(responseDto, HttpStatus.OK);
 	}
 
 	/**
@@ -125,15 +89,39 @@ public class IMController {
 		return new ResponseEntity<>(responseDto, HttpStatus.OK);
 	}
 
-	@GetMapping("/im/getAllUnAuthorisedIM")
-	public ResponseEntity<IMForApproveResponse> getAllUnAuthorisedIM() {
-		IMForApproveResponse response = imService.getAllUnAuthorisedIM();
+	//makers method
+	@PutMapping("/im/updateIMByMaker")
+	public ResponseEntity<ResponseDto> updateIMByMaker(@RequestBody IMEntity im) {
+		ResponseDto response = imService.updateImByMaker(im);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-
-	@PostMapping("/im/authoriseIM")
+	
+	@DeleteMapping("/im/deleteIMByMaker/{imid}")
+	public ResponseEntity<ResponseDto> deleteIMByMaker(@PathVariable("imid") String imCode) {
+		ResponseDto response = imService.deleteIMByMaker(imCode);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@PutMapping("/im/deactivateIMByMaker")
+	public ResponseEntity<ResponseDto> deactivateIMByMaker(@RequestBody IMDeactivateReq request) {
+		ResponseDto responseDto = imService.deactivateIMByMaker(request);
+		return new ResponseEntity<>(responseDto, HttpStatus.OK);
+	}
+	//here we will get all unauthorised request for checker
+	@GetMapping("/im/getAllUnAuthorisedIMRequests")
+	public ResponseEntity<IMForApproveResponse> getAllUnAuthorisedIM() {
+		IMForApproveResponse response = imService.getAllUnAuthorisedTxnOfIM();
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	//checker methods
+	@PostMapping("/im/authoriseAllIMRequests")
 	public ResponseEntity<ResponseDto> authoriseIM(@RequestBody List<IMEntity> approvedIMList) {
 		ResponseDto response = imService.authoriseIM(approvedIMList);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	@GetMapping("/im/getAllIMCodeAndVendorCode/{dataIdentifier}")
+	public ResponseEntity<IMAndVendorResponse> getAllIMCodeAndVendorCode(@PathVariable("dataIdentifier") short dataIdentifier) {
+		IMAndVendorResponse response = imService.getAllIMCodeAndVendorCode(dataIdentifier);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

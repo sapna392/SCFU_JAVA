@@ -22,13 +22,13 @@ public interface VendorService {
 
 	VendorDetailsResponseDto getVendorByCode(String vendorCode);
 
-	ResponseDto deleteById(String vendorId);
+	ResponseDto deleteVendorByIdByMaker(String vendorId);
 
-	ResponseDto addVendor(VendorEntity vendor);
+	ResponseDto addVendorByMaker(VendorEntity vendor);
 
-	ResponseDto update(VendorEntity vendor);
+	ResponseDto updateVendorByMaker(VendorEntity vendor);
 
-	ResponseDto deActivate(VendorDeactivateRequest request);
+	ResponseDto deActivateVendorByMaker(VendorDeactivateRequest request);
 
 	VendorDetailsResponseDto getAllVendorByImCode(String imCode);
 
@@ -36,6 +36,6 @@ public interface VendorService {
 	
 	VendorPreAuthResponse getAllUnAuthorisedVendor();
 	
-	ResponseDto authoriseVendor(List<VendorEntity> approvedVendorList);
+	ResponseDto authoriseVendorByCheker(List<VendorEntity> approvedVendorList);
 
 }

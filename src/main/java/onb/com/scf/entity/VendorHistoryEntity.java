@@ -1,9 +1,12 @@
 package onb.com.scf.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,8 +18,8 @@ import lombok.Data;
 public class VendorHistoryEntity {
 	@Column
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long vendorHistoryId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long requestId;
 
 	@Column
 	private String vendorCode;
@@ -113,23 +116,21 @@ public class VendorHistoryEntity {
 	@Column
 	private String nickName;
 	@Column
-	private Number vendorOnboardedFromSourceId;
+	private short vendorOnboardedFromSourceId;
 	@Column
 	private String status;
 	@Column
 	private String authorizedBy;
 	@Column
-	private Date authorizedDate;
+	private Timestamp authorizedDate;
 	@Column
 	private String deactivatedBy;
 	@Column
 	private Date deactivatedDate;
 	@Column
-	private Date creationTime;
+	private Timestamp creationTime;
 	@Column
 	private String createdBy;
-	@Column
-	private Date lastModTime;
 	@Column
 	private String email;
 	@Column
@@ -162,9 +163,12 @@ public class VendorHistoryEntity {
 	private String h2hopted;
 	@Column
 	private String remark;
+	@Column
+	private Timestamp lastModificationDateTime;
+	@Column
+	private String action;
 
 	public VendorHistoryEntity(VendorEntity vendor) {
-		this.vendorHistoryId = vendor.getVendorSeqCode();
 		this.vendorCode = vendor.getVendorCode();
 		this.imCode = vendor.getImCode();
 		this.businessGroup = vendor.getBusinessGroup();
@@ -221,7 +225,7 @@ public class VendorHistoryEntity {
 		this.creationTime = vendor.getCreationTime();
 		this.createdBy = vendor.getCreatedBy();
 
-		this.lastModTime = vendor.getLastModTime();
+		this.lastModificationDateTime = vendor.getLastModificationDateTime();
 		this.email = vendor.getEmail();
 		this.address1 = vendor.getAddress1();
 		this.address2 = vendor.getAddress2();
@@ -237,6 +241,7 @@ public class VendorHistoryEntity {
 		this.fax = vendor.getFax();
 		this.h2hopted = vendor.getH2hopted();
 		this.remark = vendor.getRemark();
+		this.action = vendor.getAction();
 	}
 	public VendorHistoryEntity() {
 		super();

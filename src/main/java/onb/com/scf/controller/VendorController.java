@@ -64,9 +64,9 @@ public class VendorController {
 	 * @param vendorId
 	 * @return success or failure response
 	 */
-	@DeleteMapping("/deleteVendor/{vendorid}")
+	@DeleteMapping("/deleteVendorByIdByMaker/{vendorid}")
 	public ResponseEntity<ResponseDto> deleteVendor(@PathVariable("vendorid") String vendorId) {
-		ResponseDto response = vendorService.deleteById(vendorId);
+		ResponseDto response = vendorService.deleteVendorByIdByMaker(vendorId);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -75,9 +75,9 @@ public class VendorController {
 	 * 
 	 * @return vendorCode
 	 */
-	@PostMapping("/addVendor")
+	@PostMapping("/addVendorByMaker")
 	public ResponseEntity<ResponseDto> saveVendor(@RequestBody VendorEntity vendor) {
-		ResponseDto response = vendorService.addVendor(vendor);
+		ResponseDto response = vendorService.addVendorByMaker(vendor);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -87,9 +87,9 @@ public class VendorController {
 	 * @param vendor
 	 * @return vendor
 	 */
-	@PutMapping("/updateVendor")
+	@PutMapping("/updateVendorByMaker")
 	public ResponseEntity<ResponseDto> update(@RequestBody VendorEntity vendor) {
-		ResponseDto response =vendorService.update(vendor);
+		ResponseDto response =vendorService.updateVendorByMaker(vendor);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -99,9 +99,9 @@ public class VendorController {
 	 * @param vendor
 	 * @return vendor
 	 */
-	@PutMapping("/deactivateVendor")
+	@PutMapping("/deActivateVendorByMaker")
 	public ResponseEntity<ResponseDto> deActivate(@RequestBody VendorDeactivateRequest requets) {
-		ResponseDto responseDto = vendorService.deActivate(requets);
+		ResponseDto responseDto = vendorService.deActivateVendorByMaker(requets);
 		return new ResponseEntity<>(responseDto, HttpStatus.OK);
 	}
 
@@ -138,7 +138,7 @@ public class VendorController {
 
 	@PostMapping("/vendor/authoriseVendor")
 	public ResponseEntity<ResponseDto> authoriseIM(@RequestBody List<VendorEntity> approvedVendorList) {
-		ResponseDto response = vendorService.authoriseVendor(approvedVendorList);
+		ResponseDto response = vendorService.authoriseVendorByCheker(approvedVendorList);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

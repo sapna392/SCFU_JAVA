@@ -1,9 +1,12 @@
 package onb.com.scf.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,8 +18,8 @@ import lombok.Data;
 public class IMPreauthEntity {
 	@Column
 	@Id
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long imId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long imPreauthId;
 
 	@Column
 	private String imCode;
@@ -96,17 +99,15 @@ public class IMPreauthEntity {
 	@Column
 	private String authorizedBy;
 	@Column
-	private Date authorizedDate;
+	private Timestamp authorizedDate;
 	@Column
 	private String deactivatedBy;
 	@Column
 	private Date deactivatedDate;
 	@Column
-	private Date creationTime;
+	private Timestamp creationTime;
 	@Column
 	private String createdBy;
-	@Column
-	private Date lastModTime;
 	@Column
 	private String email;
 	@Column
@@ -231,9 +232,10 @@ public class IMPreauthEntity {
 	private String noOfDaysTo;
 	@Column
 	private String remark;
+	@Column
+	private Timestamp lastModificationDateTime;
 
 	public IMPreauthEntity(IMEntity im) {
-		this.imId = im.getImId();
 		this.imCode = im.getImCode();
 		this.dealerCode = im.getDealerCode();
 		this.vendorCode = im.getVendorCode();
@@ -269,7 +271,7 @@ public class IMPreauthEntity {
 		this.deactivatedDate = im.getDeactivatedDate();
 		this.creationTime = im.getCreationTime();
 		this.createdBy = im.getCreatedBy();
-		this.lastModTime = im.getLastModTime();
+		this.lastModificationDateTime = im.getLastModificationDateTime();
 		this.email = im.getEmail();
 		this.address1 = im.getAddress1();
 		this.address2 = im.getAddress2();

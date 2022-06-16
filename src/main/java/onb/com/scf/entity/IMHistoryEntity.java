@@ -1,9 +1,12 @@
 package onb.com.scf.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,10 +23,8 @@ public class IMHistoryEntity {
 
 	@Column
 	@Id
-	// @SequenceGenerator(name = "IMSeqGenerator", sequenceName = "mySeq",
-	// initialValue = 100, allocationSize = 1000)
-	// @GeneratedValue(generator = "IMSeqGenerator")
-	private Long imId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long requestId;
 
 	@Column
 	private String imCode;
@@ -99,11 +100,11 @@ public class IMHistoryEntity {
 	@Column
 	private Date deactivatedDate;
 	@Column
-	private Date creationTime;
+	private Timestamp creationTime;
 	@Column
 	private String createdBy;
 	@Column
-	private Date lastModTime;
+	private Timestamp lastModificationDateTime;
 	@Column
 	private String email;
 	@Column
@@ -229,7 +230,6 @@ public class IMHistoryEntity {
 	private String remark;
 
 	public IMHistoryEntity(IMEntity im) {
-		this.imId = im.getImId();
 		this.imCode = im.getImCode();
 		this.dealerCode = im.getDealerCode();
 		this.vendorCode = im.getVendorCode();
@@ -265,7 +265,7 @@ public class IMHistoryEntity {
 		this.deactivatedDate = im.getDeactivatedDate();
 		this.creationTime = im.getCreationTime();
 		this.createdBy = im.getCreatedBy();
-		this.lastModTime = im.getLastModTime();
+		this.lastModificationDateTime = im.getLastModificationDateTime();
 		this.email = im.getEmail();
 		this.address1 = im.getAddress1();
 		this.address2 = im.getAddress2();

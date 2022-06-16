@@ -43,4 +43,49 @@ public class StatusConstant {
 
 	public static final String STATUS_DESCRIPTION_PREAUTH_VENDOR_AUTHORISED_SUCESSFULLY = "Vendor Authorised successfully !";
 
+	public static final short VENDOR_ONB_FROM_SCF = 1;
+	public static final short VENDOR_ONB_FROM_LLMS = 2;
+
+	public static final String STATUS_DESCRIPTION_VENDOR_ONBOARDED_FROM_LLMS = "Vendor Onboarded from LLMS so Edit Not Allowed !";
+
+	public static final String ACTION_ADD_IM_STATUS = "waiting for created approval";
+	public static final String ACTION_UPDATE_IM_STATUS = "waiting for edited approval";
+	public static final String ACTION_DELETE_IM_STATUS = "waiting for deleted approval";
+	public static final String ACTION_ACTIVATE_IM_STATUS = "ACTIVATE IM";
+	public static final String ACTION_DEACTIVATE_IM_STATUS = "waiting for deactivate  approval";
+
+	public static final String ACTION_ADD_IM = "Add IM";
+	public static final String ACTION_UPDATE_IM = "Edit IM";
+	public static final String ACTION_DELETE_IM = "Delete IM";
+	public static final String ACTION_ACTIVATE_IM = "ACTIVATE IM";
+	public static final String ACTION_DEACTIVATE_IM = "Deactivate IM";
+
+	public static final String ACTION_ADD_VENDOR = "Add Vendor";
+	public static final String ACTION_UPDATE_VENDOR = "Edit Vendor";
+	public static final String ACTION_DELETE_VENDOR = "Delete Vendor";
+	public static final String ACTION_ACTIVATE_VENDOR = "ACTIVATE Vendor";
+	public static final String ACTION_DEACTIVATE_VENDOR = "Deactivate Vendor";
+
+	public static final String STATUS_IM_NOT_DEACTIVATE = "IM Not Authorised so cant deactivate  !";
+
+	public static final String STATUS_VENDOR_CODE_NOT_FOUND = "Vendor Code Not Found !";
+
+	public static final String ACTION_ADD_VENDOR_STATUS = "waiting for created approval";
+	public static final String ACTION_UPDATE_VENDOR_STATUS = "waiting for edited approval";
+	public static final String ACTION_DELETE_VENDOR_STATUS = "waiting for deleted approval";
+	public static final String ACTION_ACTIVATE_VENDOR_STATUS = "ACTIVATE IM";
+	public static final String ACTION_DEACTIVATE_VENDOR_STATUS = "waiting for deactivate  approval";
+
+	public static final String STATUS_VENDOR_NOT_DEACTIVATE = "Vendor Not Authorised so cant deactivate  !";
+
+	public static final String PAN_CARD_ALREADY_MAPPED = "Pand Card Already Exist";
+
+	public static final String STATUS_PAN_NUMBER_NOT_FOUND = "PAN Card Number Not Found !";
+	
+	public static final short IM_DATA_IDENTIFIER     = 1;
+	public static final short VENDOR_DATA_IDENTIFIER = 2;
+	
+	public static final String DATA_IDENTIFIER_NOT_FOUND = "Data Identifier Not Found !";
+	
+	
 }

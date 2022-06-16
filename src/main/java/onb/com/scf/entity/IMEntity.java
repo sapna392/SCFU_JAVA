@@ -1,6 +1,8 @@
 package onb.com.scf.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +22,7 @@ public class IMEntity {
 	@Column
 	@Id
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long imId;
+	private Long imSeqId;
 
 	@Column
 	private String imCode;
@@ -100,17 +102,17 @@ public class IMEntity {
 	@Column
 	private String authorizedBy;
 	@Column
-	private Date authorizedDate;
+	private Timestamp authorizedDate;
 	@Column
 	private String deactivatedBy;
 	@Column
 	private Date deactivatedDate;
 	@Column
-	private Date creationTime;
+	private Timestamp creationTime;
 	@Column
 	private String createdBy;
 	@Column
-	private Date lastModTime;
+	private Timestamp lastModificationDateTime;
 	@Column
 	private String email;
 	@Column
@@ -235,5 +237,107 @@ public class IMEntity {
 	private String noOfDaysTo;
 	@Column
 	private String remark;
-
+	
+	public IMEntity(IMPreauthEntity im) {
+		this.imSeqId = im.getImPreauthId();
+		this.imCode = im.getImCode();
+		this.dealerCode = im.getDealerCode();
+		this.vendorCode = im.getVendorCode();
+		this.name = im.getName();
+		this.nickName = im.getNickName();
+		this.groupId = im.getGroupId();
+		this.groupName = im.getGroupName();
+		this.allowedDomain = im.getAllowedDomain();
+		this.primaryEmail = im.getPrimaryEmail();
+		this.scheduleRecptid = im.getScheduleRecptid();
+		this.debitProcessingChargeAcctname = im.getDebitProcessingChargeAcctname();
+		this.debitProcessingChargeAcctno = im.getDebitProcessingChargeAcctno();
+		this.debitProcessingChargeAcctbrccode = im.getDebitProcessingChargeAcctbrccode();
+		this.debitCommisionChargeAcctname = im.getDebitCommisionChargeAcctname();
+		this.debitCommisionChargeAcctno = im.getDebitCommisionChargeAcctno();
+		this.debitCommisionChargeAcctbrccode = im.getDebitCommisionChargeAcctbrccode();
+		this.interbnkCommisionAcctname = im.getInterbnkCommisionAcctname();
+		this.interbnkCommisionAcctno = im.getInterbnkCommisionAcctno();
+		this.interbnkCommisionAcctbrccode = im.getInterbnkCommisionAcctbrccode();
+		this.debitInterestAcctname = im.getDebitInterestAcctname();
+		this.debitInterestAcctno = im.getDebitInterestAcctno();
+		this.debitInterestAcctbrccode = im.getDebitInterestAcctbrccode();
+		this.creditAcctname = im.getCreditAcctname();
+		this.creditAcctno = im.getCreditAcctno();
+		this.creditAcctbrccode = im.getCreditAcctbrccode();
+		this.advanceAcctname = im.getAdvanceAcctname();
+		this.advanceAcctno = im.getAdvanceAcctno();
+		this.advanceAcctbrccode = im.getAdvanceAcctbrccode();
+		this.status = im.getStatus();
+		this.authorizedBy = im.getAuthorizedBy();
+		this.authorizedDate = im.getAuthorizedDate();
+		this.deactivatedBy = im.getDeactivatedBy();
+		this.deactivatedDate = im.getDeactivatedDate();
+		this.creationTime = im.getCreationTime();
+		this.createdBy = im.getCreatedBy();
+		this.lastModificationDateTime = im.getLastModificationDateTime();
+		this.email = im.getEmail();
+		this.address1 = im.getAddress1();
+		this.address2 = im.getAddress2();
+		this.city = im.getCity();
+		this.pincode = im.getPincode();
+		this.district = im.getDistrict();
+		this.state = im.getState();
+		this.country = im.getCountry();
+		this.phoneNo = im.getPhoneNo();
+		this.imPan = im.getImPan();
+		this.imTan = im.getImTan();
+		this.isImInactive = im.getIsImInactive();
+		this.fax = im.getFax();
+		this.action = im.getAction();
+		// this.historyId = im.get
+		this.loanAccNosharedBy = im.getLoanAccNosharedBy();
+		this.businessGroup = im.getBusinessGroup();
+		this.backDatedInvoiceDays = im.getBackDatedInvoiceDays();
+		this.backDatedInvoice = im.getBackDatedInvoice();
+		this.transactionStatus = im.getTransactionStatus();
+		this.isVendorAutoOnboarding = im.getIsVendorAutoOnboarding();
+		this.penalInterestRate = im.getPenalInterestRate();
+		this.npaModTime = im.getNpaModTime();
+		this.h2hopted = im.getH2hopted();
+		this.makerTime = im.getMakerTime();
+		this.createdByMakerId = im.getCreatedByMakerId();
+		this.isBusinessCorrespondentEnable = im.getIsBusinessCorrespondentEnable();
+		this.typeBusinessCorrespondent = im.getTypeBusinessCorrespondent();
+		this.imMappingTime = im.getImMappingTime();
+		this.imMappingBy = im.getImMappingBy();
+		this.imLimit = im.getImLimit();
+		this.imLimitExpireDate = im.getImLimitExpireDate();
+		this.imPostageCharges = im.getImPostageCharges();
+		this.imCommissionCharges = im.getImCommissionCharges();
+		this.imTaxCharges = im.getImTaxCharges();
+		this.imDueDate = im.getImDueDate();
+		this.imInterestRecoverOn = im.getImInterestRecoverOn();
+		this.imVendorAutoOnboarding = im.getImVendorAutoOnboarding();
+		this.sharedBy = im.getSharedBy();
+		this.overrideCreditPeriodParameters = im.getOverrideCreditPeriodParameters();
+		this.creditPeriod = im.getCreditPeriod();
+		this.creditPeriodDefault = im.getCreditPeriodDefault();
+		this.creditPeriodMin = im.getCreditPeriodMin();
+		this.creditPeriodMax = im.getCreditPeriodMax();
+		this.overrideRateofInt = im.getOverrideRateofInt();
+		this.rateOfInt = im.getRateOfInt();
+		this.effectiveIntRate = im.getEffectiveIntRate();
+		this.selectParameterToOverride = im.getSelectParameterToOverride();
+		this.addorDeduct = im.getAddorDeduct();
+		this.rateOfInterestDefault = im.getRateOfInterestDefault();
+		this.rateOfInterestMin = im.getRateOfInterestMin();
+		this.rateOfInterestMax = im.getRateOfInterestMax();
+		this.penalROI = im.getPenalROI();
+		this.backDatedInvoicing = im.getBackDatedInvoicing();
+		this.noOfDaysFrom = im.getNoOfDaysFrom();
+		this.noOfDaysTo = im.getNoOfDaysTo();
+		this.status = im.getStatus();
+		this.creationTime = im.getCreationTime();
+		this.remark = im.getRemark();
+	}
+	
+	public IMEntity() {
+		super();
+	}
 }

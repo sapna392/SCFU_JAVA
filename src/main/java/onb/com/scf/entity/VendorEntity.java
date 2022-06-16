@@ -1,5 +1,6 @@
 package onb.com.scf.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ public class VendorEntity {
 	@Column
 	@Id
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long vendorSeqCode;
+	private Long vendorSeqId;
 
 	@Column
 	private String vendorCode;
@@ -117,23 +118,21 @@ public class VendorEntity {
 	@Column
 	private String nickName;
 	@Column
-	private Number vendorOnboardedFromSourceId;
+	private short vendorOnboardedFromSourceId;
 	@Column
 	private String status;
 	@Column
 	private String authorizedBy;
 	@Column
-	private Date authorizedDate;
+	private Timestamp authorizedDate;
 	@Column
 	private String deactivatedBy;
 	@Column
 	private Date deactivatedDate;
 	@Column
-	private Date creationTime;
+	private Timestamp creationTime;
 	@Column
 	private String createdBy;
-	@Column
-	private Date lastModTime;
 	@Column
 	private String email;
 	@Column
@@ -166,5 +165,91 @@ public class VendorEntity {
 	private String h2hopted;
 	@Column
 	private String remark;
+	@Column
+	private Timestamp lastModificationDateTime;
+	@Column
+	private String action;
+	
+	
+	public VendorEntity(VendorPreAuthEntity vendor) {
+		this.vendorSeqId =  vendor.getPreAuthvendorId();
+		this.vendorCode = vendor.getVendorCode();
+		this.imCode = vendor.getImCode();
+		this.businessGroup = vendor.getBusinessGroup();
+		this.creditAccBank = vendor.getCreditAccBank();
+		this.creditAcctbrccode = vendor.getCreditAcctbrccode();
+		this.creditAcctname = vendor.getCreditAcctname();
+		this.creditAcctno = vendor.getCreditAcctno();
+		this.creditCommisionChargeAcctbrccode = vendor.getCreditCommisionChargeAcctbrccode();
+		this.creditCommisionChargeAcctname = vendor.getCreditCommisionChargeAcctname();
+		this.creditCommisionChargeAcctno = vendor.getCreditCommisionChargeAcctno();
+		this.creditInterestAcctbrccode = vendor.getCreditInterestAcctbrccode();
+		this.creditInterestAcctname = vendor.getCreditInterestAcctname();
+		this.creditInterestAcctno = vendor.getCreditInterestAcctno();
+
+		this.debitAcctbrccode = vendor.getDebitAcctbrccode();
+		this.debitAcctname = vendor.getDebitAcctname();
+		this.debitAcctno = vendor.getDebitAcctno();
+		this.debitCommisionChargeAcctbrccode = vendor.getDebitCommisionChargeAcctbrccode();
+		this.debitCommisionChargeAcctname = vendor.getDebitCommisionChargeAcctname();
+		this.debitCommisionChargeAcctno = vendor.getDebitCommisionChargeAcctno();
+		this.debitInterestAcctbrccode = vendor.getDebitInterestAcctbrccode();
+		this.debitInterestAcctname = vendor.getDebitInterestAcctname();
+		this.debitInterestAcctno = vendor.getDebitInterestAcctno();
+		this.debitProcessingChargeAcctname = vendor.getDebitProcessingChargeAcctname();
+		this.debitProcessingChargeAcctbrccode = vendor.getDebitProcessingChargeAcctbrccode();
+		this.debitProcessingChargeAcctno = vendor.getDebitProcessingChargeAcctno();
+		this.defaultCreditAccBank = vendor.getDefaultCreditAccBank();
+
+		this.defaultCreditAcctbrccode = vendor.getDefaultCreditAcctbrccode();
+		this.defaultCreditAcctname = vendor.getDefaultCreditAcctname();
+		this.defaultCreditAcctno = vendor.getDefaultCreditAcctno();
+		this.loanAccNoOwnedBy = vendor.getLoanAccNoOwnedBy();
+		this.primaryEmail = vendor.getPrimaryEmail();
+		this.vendorAdvanceAcctbrccode = vendor.getVendorAdvanceAcctbrccode();
+		this.vendorAdvanceAcctname = vendor.getVendorAdvanceAcctname();
+		this.vendorAdvanceAcctno = vendor.getVendorAdvanceAcctno();
+		this.vendorCommissionCharges = vendor.getVendorCommissionCharges();
+		this.vendorDueDate = vendor.getVendorDueDate();
+		this.vendorInterestRecoverOn = vendor.getVendorInterestRecoverOn();
+		this.vendorLimit = vendor.getVendorLimit();
+		this.vendorLimitExpireDate = vendor.getVendorLimitExpireDate();
+
+		this.vendorNarrativeCount = vendor.getVendorNarrativeCount();
+		this.vendorPostageCharges = vendor.getVendorPostageCharges();
+		this.vendorTaxCharges = vendor.getVendorTaxCharges();
+		this.name = vendor.getName();
+		this.nickName = vendor.getNickName();
+		this.vendorOnboardedFromSourceId = vendor.getVendorOnboardedFromSourceId();
+		this.status = vendor.getStatus();
+		this.authorizedBy = vendor.getAuthorizedBy();
+		this.authorizedDate = vendor.getAuthorizedDate();
+		this.deactivatedBy = vendor.getDeactivatedBy();
+		this.deactivatedDate = vendor.getDeactivatedDate();
+		this.creationTime = vendor.getCreationTime();
+		this.createdBy = vendor.getCreatedBy();
+
+		this.lastModificationDateTime = vendor.getLastModificationDateTime();
+		this.email = vendor.getEmail();
+		this.address1 = vendor.getAddress1();
+		this.address2 = vendor.getAddress2();
+		this.city = vendor.getCity();
+		this.pincode = vendor.getPincode();
+		this.district = vendor.getDistrict();
+		this.state = vendor.getState();
+		this.country = vendor.getCountry();
+		this.vendorPan = vendor.getVendorPan();
+		this.vendorTan = vendor.getVendorTan();
+		this.isVendorInactive = vendor.getIsVendorInactive();
+		this.phoneNo = vendor.getPhoneNo();
+		this.fax = vendor.getFax();
+		this.h2hopted = vendor.getH2hopted();
+		this.remark = vendor.getRemark();
+		this.action = vendor.getAction();
+	}
+	
+	public VendorEntity() {
+		super();
+	}
 
 }
