@@ -356,6 +356,7 @@ public class VendorServiceImpl implements VendorService {
 				response.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				response.setStatus(StatusConstant.STATUS_FAILURE);
 				response.setMsg(StatusConstant.STATUS_DATA_NOT_AVAILAIBLE);
+				response.setData(vendor);
 			}
 		} catch (Exception e) {
 			log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
