@@ -111,14 +111,14 @@ public class VendorController {
 		return new ResponseEntity<>(responseDto, HttpStatus.OK);
 	}
 
-	/*
-	 * @GetMapping("/getAllVendorByIMCode/{imCode}") public
-	 * ResponseEntity<VendorDetailsResponseDto>
-	 * getAllVendorByImCode(@PathVariable("imCode") String imCode) {
-	 * VendorDetailsResponseDto vendorData =
-	 * vendorService.getAllVendorByImCode(imCode); return new
-	 * ResponseEntity<>(vendorData,HttpStatus.OK); } /** This api activates the
-	 * vendor detail in the database
+
+	@GetMapping("/getAllVendorByIMCode/{imCode}") 
+	public ResponseEntity<VendorDetailsResponseDto>getAllVendorByImCode(@PathVariable("imCode") String imCode) {
+		VendorDetailsResponseDto vendorData =vendorService.getAllVendorByImCode(imCode); 
+		return new ResponseEntity<>(vendorData,HttpStatus.OK); 
+	}
+	/** This api activates the
+	  vendor detail in the database
 	 * 
 	 * @param vendor
 	 * 
@@ -129,7 +129,7 @@ public class VendorController {
 	 * vendor) { vendor.setIsVendorInactive(true);
 	 * vendorService.saveOrUpdate(vendor); return vendor; }
 	 */
-	
+
 	@GetMapping("/vendor/getAllUnAuthorisedVendor")
 	public ResponseEntity<VendorPreAuthResponse> getAllUnAuthorisedVendor() {
 		VendorPreAuthResponse response = vendorService.getAllUnAuthorisedVendor();
