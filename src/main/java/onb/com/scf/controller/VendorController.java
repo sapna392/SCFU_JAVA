@@ -1,5 +1,6 @@
 package onb.com.scf.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.dto.VendoActivateRequest;
@@ -139,6 +142,12 @@ public class VendorController {
 	@PostMapping("/vendor/authoriseVendor")
 	public ResponseEntity<ResponseDto> authoriseIM(@RequestBody List<VendorEntity> approvedVendorList) {
 		ResponseDto response = vendorService.authoriseVendorByCheker(approvedVendorList);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@PostMapping("/addBulkVendor/{id}")
+	public ResponseEntity<ResponseDto> saveBulkVendor(@PathVariable String id,@RequestPart("file") MultipartFile file) throws IOException {
+		ResponseDto response = vendorService.addBulkVendor(id,file);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

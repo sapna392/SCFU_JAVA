@@ -248,6 +248,7 @@ public class VendorPreAuthEntity {
 		this.h2hopted = vendor.getH2hopted();
 		this.remark = vendor.getRemark();
 		this.action = vendor.getAction();
+		this.isVendorAutoOnboarding = vendor.getIsVendorAutoOnboarding();
 	}
 	public VendorPreAuthEntity() {
 		super();

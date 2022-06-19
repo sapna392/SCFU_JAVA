@@ -242,6 +242,7 @@ public class VendorHistoryEntity {
 		this.h2hopted = vendor.getH2hopted();
 		this.remark = vendor.getRemark();
 		this.action = vendor.getAction();
+		this.isVendorAutoOnboarding = vendor.getIsVendorAutoOnboarding();
 	}
 	public VendorHistoryEntity() {
 		super();

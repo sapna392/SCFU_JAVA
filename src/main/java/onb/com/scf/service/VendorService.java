@@ -1,8 +1,10 @@
 package onb.com.scf.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.dto.VendoActivateRequest;
@@ -37,5 +39,7 @@ public interface VendorService {
 	VendorPreAuthResponse getAllUnAuthorisedVendor();
 	
 	ResponseDto authoriseVendorByCheker(List<VendorEntity> approvedVendorList);
+
+	ResponseDto addBulkVendor(String id, MultipartFile file) throws IOException;
 
 }
