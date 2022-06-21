@@ -234,6 +234,10 @@ public class IMPreauthEntity {
 	private String remark;
 	@Column
 	private Timestamp lastModificationDateTime;
+	@Column
+	private String salesChannel;
+	@Column
+	private String branch;
 
 	public IMPreauthEntity(IMEntity im) {
 		this.imCode = im.getImCode();
@@ -286,7 +290,7 @@ public class IMPreauthEntity {
 		this.isImInactive = im.getIsImInactive();
 		this.fax = im.getFax();
 		this.action = im.getAction();
-		// this.historyId = im.get
+		//this.historyId = im.get
 		this.loanAccNosharedBy = im.getLoanAccNosharedBy();
 		this.businessGroup = im.getBusinessGroup();
 		this.backDatedInvoiceDays = im.getBackDatedInvoiceDays();
@@ -331,6 +335,8 @@ public class IMPreauthEntity {
 		this.status = im.getStatus();
 		this.creationTime = im.getCreationTime();
 		this.remark = im.getRemark();
+		this.salesChannel = im.getSalesChannel();
+		this.branch = im.getBranch();
 	}
 
 	public IMPreauthEntity() {
