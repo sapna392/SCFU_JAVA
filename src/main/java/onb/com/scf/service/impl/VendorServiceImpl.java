@@ -2,7 +2,6 @@ package onb.com.scf.service.impl;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,9 +21,11 @@ import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.dto.VendoActivateRequest;
 import onb.com.scf.dto.VendorDeactivateRequest;
 import onb.com.scf.dto.VendorDetailsResponseDto;
+import onb.com.scf.dto.VendorEntityResponse;
 import onb.com.scf.dto.VendorPreAuthResponse;
 import onb.com.scf.entity.UserEntity;
 import onb.com.scf.entity.VendorEntity;
+import onb.com.scf.entity.VendorFileReadEntity;
 import onb.com.scf.entity.VendorHistoryEntity;
 import onb.com.scf.entity.VendorPreAuthEntity;
 import onb.com.scf.repository.IMRepository;
@@ -533,111 +534,101 @@ public class VendorServiceImpl implements VendorService {
 		return isPanAlreadyExistWithIM;
 	}
 
-/*
-	public ResponseDto addBulkVendor(String id, MultipartFile file) throws IOException {
-		List<String> contentList = null;
-		String[] bulkVendorOnboardDetailList = null;
-		VendorEntity bulkvendormapping = null;
-		ResponseDto responsedto = new ResponseDto();
-		//List<Long> duplicatevendorim = vendorRepository.checkDuplicateVendorIM();
-
-		contentList = Arrays.asList(new String(file.getInputStream().readAllBytes()).split("\r\n"));
-
-		contentList = contentList.stream().filter(cl -> !StringUtils.isEmpty(cl)).collect(Collectors.toList());
-
-		System.out.println(contentList);
-		List<VendorEntity> bulkvendetailslist =new ArrayList<VendorEntity>();
-
-		List<VendorPreAuthEntity> bulkvendetailslist1 =new ArrayList<VendorPreAuthEntity>();
-		for (String content : contentList) {
-			bulkvendormapping = new VendorEntity();
-
-			Optional<UserEntity> userEntityData = userEntityService.getEntityType("VENDOR");
-			String prefix = "";
-			if (userEntityData.isPresent()) {
-				prefix = userEntityData.get().getPrefix();
-				log.info("add Vendor started ");
-				Long maxId = vendorRepository.getTopId();
-				System.out.println("33");
-				if (maxId == null) {
-					System.out.println("33");
-					Long stratValue = userEntityData.get().getStratValue();
-					bulkvendormapping.setVendorSeqId(stratValue);
-					bulkvendormapping.setVendorCode(prefix + stratValue);
-				} else {
-					System.out.println("33");
-					bulkvendormapping.setVendorSeqId(maxId + 1);
-					bulkvendormapping.setVendorCode(prefix + (maxId + 1));
-				}
-			}
-			System.out.println("33");
-			try {
-				log.info("inside try");
-				if (!content.contains("#")) {
-					if (file.getContentType().equals("text/plain")) {
-						bulkVendorOnboardDetailList = content.split("\\|");
-					} else if (file.getContentType().equals("text/csv")) {
-						bulkVendorOnboardDetailList = content.split(",");
-					}
-					
-					log.info(bulkVendorOnboardDetailList[5]);
-					log.info(bulkVendorOnboardDetailList[6]);
-					
-Name#Vendor Code#Address#City#District#State#Country#Pincode#Email ID#Mobile No.#Fax#Additional Field#Business Group#Credit Account Number with SBI/Other#Credit Account No#Branch Code/IFS Code#Default Credit Account Number with SBI/Other#Credit Account No#Branch Code/IFS Code            
-Mohit1|VEN100|Dombivli Ameet CHS LTD|Dombivli|Thane|Maharashtra|India|422222|m.s@gmail.com|1234567890|12345|qqqq|wwww|12345|234556|2222|00000|123456
-					
-					
-					bulkvendormapping.setName(bulkVendorOnboardDetailList[0]);
-					bulkvendormapping.setAddress1(bulkVendorOnboardDetailList[1]);
-					bulkvendormapping.setCity(bulkVendorOnboardDetailList[2]);
-					bulkvendormapping.setDistrict(bulkVendorOnboardDetailList[3]);
-					bulkvendormapping.setState(bulkVendorOnboardDetailList[4]);
-				//	bulkvendormapping.setCountry(bulkVendorOnboardDetailList[5]);
-					bulkvendormapping.setPincode(Integer.valueOf(bulkVendorOnboardDetailList[6]));
-					bulkvendormapping.setEmail(bulkVendorOnboardDetailList[7]);
-					bulkvendormapping.setPhoneNo(bulkVendorOnboardDetailList[8]);
-					bulkvendormapping.setFax(bulkVendorOnboardDetailList[9]);
-					bulkvendormapping.setBusinessGroup(bulkVendorOnboardDetailList[10]);
-					log.info("name:" +bulkvendormapping.getName());
-					String vendorCode= "V200";
-					bulkvendormapping.setVendorCode(vendorCode);
-					bulkvendormapping.setCreationTime(DateTimeUtility.getCurrentTimeStamp());
-
-					bulkvendormapping.setStatus(StatusConstant.VENDOR_PENDING_STATUS);
-					bulkvendormapping.setImCode(id);
-
-
-					VendorPreAuthEntity preauthVendor = new VendorPreAuthEntity(bulkvendormapping);
-
-					//bulkvendetailslist.add(bulkvendormapping);
-					bulkvendetailslist1.add(preauthVendor);		
-
-					responsedto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
-					responsedto.setStatus(StatusConstant.STATUS_SUCCESS);
-					responsedto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY);
-				}
-			} catch (Exception e) {
-				log.error(StatusConstant.EXCEPTION_OCCURRED + e.getMessage());
-				responsedto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
-				responsedto.setStatus(StatusConstant.STATUS_FAILURE);
-				responsedto.setMsg(e.getMessage());
-			}
-		}
- 
-		log.info("preauth vendor saved");
-		//vendorPreAuthRepository.save(preauthVendor);
-		//vendorPreAuthRepository.saveAll(bulkvendetailslist1);
-		log.info("Vendor saved in master ");
-		//vendorRepository.saveAll(bulkvendetailslist);
-		//VendorHistoryEntity vendorHistory = new VendorHistoryEntity(bulkvendormapping);
-		log.info("Vendor saved in history");
-		//	vendorHistoryRepository.saveAll(bulkvendetailslist);
-		//vendorRepository.saveAll(bulkvendetailslist);
-
-
-		return responsedto;
-	}
-*/
+	/*
+	 * public ResponseDto addBulkVendor(String id, MultipartFile file) throws
+	 * IOException { List<String> contentList = null; String[]
+	 * bulkVendorOnboardDetailList = null; VendorEntity bulkvendormapping = null;
+	 * ResponseDto responsedto = new ResponseDto(); //List<Long> duplicatevendorim =
+	 * vendorRepository.checkDuplicateVendorIM();
+	 * 
+	 * contentList = Arrays.asList(new
+	 * String(file.getInputStream().readAllBytes()).split("\r\n"));
+	 * 
+	 * contentList = contentList.stream().filter(cl ->
+	 * !StringUtils.isEmpty(cl)).collect(Collectors.toList());
+	 * 
+	 * System.out.println(contentList); List<VendorEntity> bulkvendetailslist =new
+	 * ArrayList<VendorEntity>();
+	 * 
+	 * List<VendorPreAuthEntity> bulkvendetailslist1 =new
+	 * ArrayList<VendorPreAuthEntity>(); for (String content : contentList) {
+	 * bulkvendormapping = new VendorEntity();
+	 * 
+	 * Optional<UserEntity> userEntityData =
+	 * userEntityService.getEntityType("VENDOR"); String prefix = ""; if
+	 * (userEntityData.isPresent()) { prefix = userEntityData.get().getPrefix();
+	 * log.info("add Vendor started "); Long maxId = vendorRepository.getTopId();
+	 * System.out.println("33"); if (maxId == null) { System.out.println("33"); Long
+	 * stratValue = userEntityData.get().getStratValue();
+	 * bulkvendormapping.setVendorSeqId(stratValue);
+	 * bulkvendormapping.setVendorCode(prefix + stratValue); } else {
+	 * System.out.println("33"); bulkvendormapping.setVendorSeqId(maxId + 1);
+	 * bulkvendormapping.setVendorCode(prefix + (maxId + 1)); } }
+	 * System.out.println("33"); try { log.info("inside try"); if
+	 * (!content.contains("#")) { if (file.getContentType().equals("text/plain")) {
+	 * bulkVendorOnboardDetailList = content.split("\\|"); } else if
+	 * (file.getContentType().equals("text/csv")) { bulkVendorOnboardDetailList =
+	 * content.split(","); }
+	 * 
+	 * log.info(bulkVendorOnboardDetailList[5]);
+	 * log.info(bulkVendorOnboardDetailList[6]);
+	 * 
+	 * Name#Vendor Code#Address#City#District#State#Country#Pincode#Email ID#Mobile
+	 * No.#Fax#Additional Field#Business Group#Credit Account Number with
+	 * SBI/Other#Credit Account No#Branch Code/IFS Code#Default Credit Account
+	 * Number with SBI/Other#Credit Account No#Branch Code/IFS Code
+	 * Mohit1|VEN100|Dombivli Ameet CHS
+	 * LTD|Dombivli|Thane|Maharashtra|India|422222|m.s@gmail.com|1234567890|12345|
+	 * qqqq|wwww|12345|234556|2222|00000|123456
+	 * 
+	 * 
+	 * bulkvendormapping.setName(bulkVendorOnboardDetailList[0]);
+	 * bulkvendormapping.setAddress1(bulkVendorOnboardDetailList[1]);
+	 * bulkvendormapping.setCity(bulkVendorOnboardDetailList[2]);
+	 * bulkvendormapping.setDistrict(bulkVendorOnboardDetailList[3]);
+	 * bulkvendormapping.setState(bulkVendorOnboardDetailList[4]); //
+	 * bulkvendormapping.setCountry(bulkVendorOnboardDetailList[5]);
+	 * bulkvendormapping.setPincode(Integer.valueOf(bulkVendorOnboardDetailList[6]))
+	 * ; bulkvendormapping.setEmail(bulkVendorOnboardDetailList[7]);
+	 * bulkvendormapping.setPhoneNo(bulkVendorOnboardDetailList[8]);
+	 * bulkvendormapping.setFax(bulkVendorOnboardDetailList[9]);
+	 * bulkvendormapping.setBusinessGroup(bulkVendorOnboardDetailList[10]);
+	 * log.info("name:" +bulkvendormapping.getName()); String vendorCode= "V200";
+	 * bulkvendormapping.setVendorCode(vendorCode);
+	 * bulkvendormapping.setCreationTime(DateTimeUtility.getCurrentTimeStamp());
+	 * 
+	 * bulkvendormapping.setStatus(StatusConstant.VENDOR_PENDING_STATUS);
+	 * bulkvendormapping.setImCode(id);
+	 * 
+	 * 
+	 * VendorPreAuthEntity preauthVendor = new
+	 * VendorPreAuthEntity(bulkvendormapping);
+	 * 
+	 * //bulkvendetailslist.add(bulkvendormapping);
+	 * bulkvendetailslist1.add(preauthVendor);
+	 * 
+	 * responsedto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+	 * responsedto.setStatus(StatusConstant.STATUS_SUCCESS);
+	 * responsedto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY
+	 * ); } } catch (Exception e) { log.error(StatusConstant.EXCEPTION_OCCURRED +
+	 * e.getMessage());
+	 * responsedto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+	 * responsedto.setStatus(StatusConstant.STATUS_FAILURE);
+	 * responsedto.setMsg(e.getMessage()); } }
+	 * 
+	 * log.info("preauth vendor saved");
+	 * //vendorPreAuthRepository.save(preauthVendor);
+	 * //vendorPreAuthRepository.saveAll(bulkvendetailslist1);
+	 * log.info("Vendor saved in master ");
+	 * //vendorRepository.saveAll(bulkvendetailslist); //VendorHistoryEntity
+	 * vendorHistory = new VendorHistoryEntity(bulkvendormapping);
+	 * log.info("Vendor saved in history"); //
+	 * vendorHistoryRepository.saveAll(bulkvendetailslist);
+	 * //vendorRepository.saveAll(bulkvendetailslist);
+	 * 
+	 * 
+	 * return responsedto; }
+	 */
 	public ResponseDto addBulkVendor(String id, MultipartFile file) throws IOException {
 		List<String> contentList = null;
 		String[] bulkVendorOnboardDetailList = null;
@@ -651,18 +642,14 @@ Mohit1|VEN100|Dombivli Ameet CHS LTD|Dombivli|Thane|Maharashtra|India|422222|m.s
 				List<VendorEntity> bulkvendetailslist = new ArrayList<>();
 				List<VendorPreAuthEntity> bulkvendetailslist1 = new ArrayList<>();
 				List<VendorHistoryEntity> bulkvendetailshistorylist = new ArrayList<>();
-				
 				for (String content : contentList) {
 					bulkvendormapping = new VendorEntity();
 					vendorHistory = new VendorHistoryEntity();
-					
 					Optional<UserEntity> userEntityData = userEntityService.getEntityType("VENDOR");
 					String prefix = "";
 					if (userEntityData.isPresent()) {
 						prefix = userEntityData.get().getPrefix();
 						log.info("add Vendor started ");
-					 
-						
 						Long maxId = vendorRepository.getTopId();
 						if (maxId == null) {
 							Long stratValue = userEntityData.get().getStratValue();
@@ -672,9 +659,7 @@ Mohit1|VEN100|Dombivli Ameet CHS LTD|Dombivli|Thane|Maharashtra|India|422222|m.s
 							bulkvendormapping.setVendorSeqId(maxId + 1);
 							bulkvendormapping.setVendorCode(prefix + (maxId + 1));
 						}
-						
 					}
-					System.out.println("getVendorCode >>"+bulkvendormapping.getVendorCode());
 					if (!content.contains("#")) {
 						if (file.getContentType() != null) {
 							if (file.getContentType().equals("text/plain")) {
@@ -684,7 +669,6 @@ Mohit1|VEN100|Dombivli Ameet CHS LTD|Dombivli|Thane|Maharashtra|India|422222|m.s
 								bulkVendorOnboardDetailList = content.split(",");
 							}
 						}
-			
 						bulkvendormapping.setName(bulkVendorOnboardDetailList[0]);
 						bulkvendormapping.setAddress1(bulkVendorOnboardDetailList[1]);
 						bulkvendormapping.setCity(bulkVendorOnboardDetailList[2]);
@@ -700,20 +684,15 @@ Mohit1|VEN100|Dombivli Ameet CHS LTD|Dombivli|Thane|Maharashtra|India|422222|m.s
 						bulkvendormapping.setCreationTime(DateTimeUtility.getCurrentTimeStamp());
 						bulkvendormapping.setStatus(StatusConstant.VENDOR_PENDING_STATUS);
 						bulkvendormapping.setImCode(id);
-						
 						bulkvendormapping.setAction(StatusConstant.ACTION_ADD_VENDOR);
 						bulkvendormapping.setStatus(StatusConstant.VENDOR_PENDING_STATUS);
 						bulkvendormapping.setVendorOnboardedFromSourceId(StatusConstant.VENDOR_ONB_FROM_SCF);
 						bulkvendormapping.setIsVendorAutoOnboarding("true");
-						
 						VendorPreAuthEntity preauthVendor = new VendorPreAuthEntity(bulkvendormapping);
 						VendorHistoryEntity vendorHIstory = new VendorHistoryEntity(bulkvendormapping);
-				
-						
 						bulkvendetailslist1.add(preauthVendor);
 						bulkvendetailshistorylist.add(vendorHIstory);
 						bulkvendetailslist.add(bulkvendormapping);
-						
 						responsedto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
 						responsedto.setStatus(StatusConstant.STATUS_SUCCESS);
 						responsedto.setMsg(StatusConstant.STATUS_DESCRIPTION_VENDOR_ADDED_SUCESSFULLY);
@@ -723,17 +702,16 @@ Mohit1|VEN100|Dombivli Ameet CHS LTD|Dombivli|Thane|Maharashtra|India|422222|m.s
 						vendorRepository.save(bulkvendormapping);
 						log.info("Vendor saved in history");
 						vendorHistoryRepository.save(vendorHIstory);
-						
+
 					}
 				}
-				 
-				
+
 //				vendorPreAuthRepository.saveAll(bulkvendetailslist1);
 //	
 //				vendorRepository.saveAll(bulkvendetailslist);
 //
 //				vendorHistoryRepository.saveAll(bulkvendetailshistorylist);
-				
+
 			}
 		} catch (Exception e) {
 			responsedto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
@@ -742,5 +720,63 @@ Mohit1|VEN100|Dombivli Ameet CHS LTD|Dombivli|Thane|Maharashtra|India|422222|m.s
 		}
 		return responsedto;
 	}
-	
+
+	public VendorEntityResponse getVendorFromFile(String id, MultipartFile file) throws IOException {
+		List<String> contentList = null;
+		String[] bulkVendorOnboardDetailList = null;
+		VendorFileReadEntity bulkvendormapping = null;
+		VendorEntityResponse responseDto = new VendorEntityResponse();
+		List<VendorFileReadEntity> bulkvendetailslist = new ArrayList<>();
+		try {
+			if (!file.isEmpty()) {
+				contentList = Arrays.asList(new String(file.getInputStream().readAllBytes()).split("\r\n"));
+				contentList = contentList.stream().filter(cl -> !StringUtils.isEmpty(cl)).collect(Collectors.toList());
+				for (String content : contentList) {
+					bulkvendormapping = new VendorFileReadEntity();
+					if (!content.contains("#")) {
+						if (file.getContentType() != null) {
+							if (file.getContentType().equals("text/plain")) {
+								bulkVendorOnboardDetailList = content.split("\\|");
+							}
+							if (file.getContentType().equals("text/csv")) {
+								bulkVendorOnboardDetailList = content.split(",");
+							}
+						}
+						bulkvendormapping.setVendorname(bulkVendorOnboardDetailList[0]);
+						bulkvendormapping.setAddress(bulkVendorOnboardDetailList[1]);
+						bulkvendormapping.setCity(bulkVendorOnboardDetailList[2]);
+						bulkvendormapping.setDistrict(bulkVendorOnboardDetailList[3]);
+						bulkvendormapping.setState(bulkVendorOnboardDetailList[4]);
+						bulkvendormapping.setCountry(bulkVendorOnboardDetailList[5]);
+						bulkvendormapping.setPincode(Integer.valueOf(bulkVendorOnboardDetailList[6]));
+						bulkvendormapping.setEmailid(bulkVendorOnboardDetailList[7]);
+						bulkvendormapping.setMobileno(bulkVendorOnboardDetailList[8]);
+						bulkvendormapping.setFax(bulkVendorOnboardDetailList[9]);
+						bulkvendormapping.setAdditionalfields("NA");
+						bulkvendormapping.setBusinessgroup(bulkVendorOnboardDetailList[10]);
+						bulkvendormapping.setCreditaccountnumber(bulkVendorOnboardDetailList[13]);
+						bulkvendormapping.setCreditaccountnumberwithsbi(bulkVendorOnboardDetailList[12]);
+						bulkvendormapping.setImcode(id);
+						bulkvendormapping.setBranchifscode(bulkVendorOnboardDetailList[14]);
+						bulkvendormapping.setDefaultcreditaccountnnmberwithdsbiother(bulkVendorOnboardDetailList[15]);
+						bulkvendetailslist.add(bulkvendormapping);
+						responseDto.setStatusCode(StatusConstant.STATUS_SUCCESS_CODE);
+						responseDto.setStatus(StatusConstant.STATUS_SUCCESS);
+						responseDto.setMsg("All File Record Read Successfully");
+						responseDto.setData(bulkvendetailslist);
+					}
+				}
+			} else {
+				responseDto.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
+				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+				responseDto.setMsg("File Not present");
+			}
+		} catch (Exception e) {
+			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
+			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
+			responseDto.setMsg(e.getMessage());
+		}
+		return responseDto;
+	}
+
 }

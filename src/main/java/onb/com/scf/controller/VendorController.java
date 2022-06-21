@@ -22,6 +22,7 @@ import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.dto.VendoActivateRequest;
 import onb.com.scf.dto.VendorDeactivateRequest;
 import onb.com.scf.dto.VendorDetailsResponseDto;
+import onb.com.scf.dto.VendorEntityResponse;
 import onb.com.scf.dto.VendorPreAuthResponse;
 import onb.com.scf.entity.VendorEntity;
 import onb.com.scf.service.VendorService;
@@ -149,5 +150,12 @@ public class VendorController {
 	public ResponseEntity<ResponseDto> saveBulkVendor(@PathVariable String id,@RequestPart("file") MultipartFile file) throws IOException {
 		ResponseDto response = vendorService.addBulkVendor(id,file);
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getVendorFromFile/{id}") 
+	public VendorEntityResponse getVendorFromFile(@PathVariable String id,@RequestPart(name="file") MultipartFile file) throws IOException{
+		System.out.println("aaaaaaaaaaaaaasssssssssssssssa");
+		VendorEntityResponse response = vendorService.getVendorFromFile(id,file);
+		return response;
 	}
 }

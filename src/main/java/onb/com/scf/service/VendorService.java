@@ -10,6 +10,7 @@ import onb.com.scf.dto.ResponseDto;
 import onb.com.scf.dto.VendoActivateRequest;
 import onb.com.scf.dto.VendorDeactivateRequest;
 import onb.com.scf.dto.VendorDetailsResponseDto;
+import onb.com.scf.dto.VendorEntityResponse;
 import onb.com.scf.dto.VendorPreAuthResponse;
 import onb.com.scf.entity.VendorEntity;
 
@@ -41,5 +42,7 @@ public interface VendorService {
 	ResponseDto authoriseVendorByCheker(List<VendorEntity> approvedVendorList);
 
 	ResponseDto addBulkVendor(String id, MultipartFile file) throws IOException;
+
+	VendorEntityResponse getVendorFromFile(String id,MultipartFile file) throws IOException;
 
 }
