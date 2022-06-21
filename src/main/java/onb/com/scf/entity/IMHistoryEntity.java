@@ -228,6 +228,10 @@ public class IMHistoryEntity {
 	private String noOfDaysTo;
 	@Column
 	private String remark;
+	@Column
+	private String salesChannel;
+	@Column
+	private String branch;
 
 	public IMHistoryEntity(IMEntity im) {
 		this.imCode = im.getImCode();
@@ -325,6 +329,8 @@ public class IMHistoryEntity {
 		this.status = im.getStatus();
 		this.creationTime = im.getCreationTime();
 		this.remark = im.getRemark();
+		this.salesChannel = im.getSalesChannel();
+		this.branch = im.getBranch();
 	}
 
 	public IMHistoryEntity() {

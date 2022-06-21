@@ -237,6 +237,10 @@ public class IMEntity {
 	private String noOfDaysTo;
 	@Column
 	private String remark;
+	@Column
+	private String salesChannel;
+	@Column
+	private String branch;
 	
 	public IMEntity(IMPreauthEntity im) {
 		this.imSeqId = im.getImPreauthId();
@@ -335,6 +339,8 @@ public class IMEntity {
 		this.status = im.getStatus();
 		this.creationTime = im.getCreationTime();
 		this.remark = im.getRemark();
+		this.salesChannel = im.getSalesChannel();
+		this.branch = im.getBranch();
 	}
 	
 	public IMEntity() {
