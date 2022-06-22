@@ -770,7 +770,7 @@ public class VendorServiceImpl implements VendorService {
 				responseDto.setStatusCode(StatusConstant.STATUS_DATA_NOT_FOUND_CODE);
 				responseDto.setStatus(StatusConstant.STATUS_FAILURE);
 				responseDto.setMsg("File Not present");
-			}
+			} 
 		} catch (Exception e) {
 			responseDto.setStatusCode(StatusConstant.STATUS_FAILURE_CODE);
 			responseDto.setStatus(StatusConstant.STATUS_FAILURE);
@@ -778,5 +778,6 @@ public class VendorServiceImpl implements VendorService {
 		}
 		return responseDto;
 	}
+	
 
 }

@@ -151,11 +151,10 @@ public class VendorController {
 		ResponseDto response = vendorService.addBulkVendor(id,file);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	@GetMapping("/getVendorFromFile/{id}") 
+	  
+	@GetMapping("/getVendorFromFile/{id}")  
 	public VendorEntityResponse getVendorFromFile(@PathVariable String id,@RequestPart(name="file") MultipartFile file) throws IOException{
-		System.out.println("aaaaaaaaaaaaaasssssssssssssssa");
 		VendorEntityResponse response = vendorService.getVendorFromFile(id,file);
-		return response;
+		return response; 
 	}
 }
