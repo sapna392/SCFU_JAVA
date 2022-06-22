@@ -341,6 +341,10 @@ public class IMEntity {
 		this.remark = im.getRemark();
 		this.salesChannel = im.getSalesChannel();
 		this.branch = im.getBranch();
+		this.debitAcctbrccode = im.getDebitAcctbrccode();
+		this.debitAcctname = im.getDebitAcctname();
+		this.debitAcctno = im.getDebitAcctno();
+		this.hostUniken = im.getHostUniken();
 	}
 	
 	public IMEntity() {

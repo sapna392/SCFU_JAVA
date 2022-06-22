@@ -232,6 +232,14 @@ public class IMHistoryEntity {
 	private String salesChannel;
 	@Column
 	private String branch;
+	@Column
+	private String debitAcctbrccode;
+	@Column
+	private String debitAcctname;
+	@Column
+	private String debitAcctno;
+	@Column
+	private String hostUniken;
 
 	public IMHistoryEntity(IMEntity im) {
 		this.imCode = im.getImCode();
@@ -331,6 +339,10 @@ public class IMHistoryEntity {
 		this.remark = im.getRemark();
 		this.salesChannel = im.getSalesChannel();
 		this.branch = im.getBranch();
+		this.debitAcctbrccode = im.getDebitAcctbrccode();
+		this.debitAcctname = im.getDebitAcctname();
+		this.debitAcctno = im.getDebitAcctno();
+		this.hostUniken = im.getHostUniken();
 	}
 
 	public IMHistoryEntity() {
